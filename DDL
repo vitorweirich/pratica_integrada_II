@@ -1,0 +1,72 @@
+create table Endereco (
+    id serial primary key,
+    logradouro varchar(50) not null,
+    bairro varchar(50) not null,
+    cidade varchar(50) not null,
+    cep varchar(8) not null
+);
+
+create table Estabelecimento (
+    id serial primary key,
+    nome varchar(100) not null,
+    id_endereco integer not null,
+    razao_social varchar(100) not null,
+    cnpj varchar(14) not null,
+    inscricao_estadual varchar(15) not null,
+    telefone varchar(11) not null,
+    foreign key(id_endereco) references Endereco(id)
+);
+
+create table Funcionarios (
+    id serial primary key,
+    nome varchar(100) not null,
+    cpf varchar(11) not null,
+    data_nasc date not null,
+    funcao varchar(25) not null,
+    id_endereco integer not null,
+    id_estabelecimento integer not null,
+    foreign key(id_endereco) references Endereco(id),
+    foreign key(id_estabelecimento) references Estabelecimento(id)
+);
+
+create table Categoria (
+    id serial primary key,
+    descricao varchar(250) not null
+);
+
+create table Produtos (
+    id serial primary key,
+    nome varchar(100) not null,
+    preco double precision not null,
+    qtde integer not null,
+    uni_medida varchar(25) not null,
+    cozido boolean not null,
+    id_estabelecimento integer not null,
+    id_categoria integer not null,
+    foreign key(id_estabelecimento) references Estabelecimento(id),
+    foreign key(id_categoria) references Categoria(id)
+);
+
+create table Comandas (
+    id serial primary key,
+    valor_total double precision,
+    desconto double precision,
+    mesa varchar(10),
+    id_estabelecimento integer not null,
+    data_hora_criacao timestamp not null,
+    data_hora_finalizacao timestamp,
+    valor_pago double precision,
+    foreign key(id_estabelecimento) references Estabelecimento(id)
+);
+
+create table Pedidos (
+    qntd integer not null,
+    id_comandas integer not null,
+    id_produtos integer not null,
+    id serial primary key,
+    data_hora_criacao timestamp,
+    data_hora_finalizacao timestamp,
+    data_hora_entrega timestamp,
+    foreign key(id_comandas) references Comandas(id),
+    foreign key(id_produtos) references Produtos(id)
+);

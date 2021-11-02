@@ -1,23 +1,27 @@
 # REQUISITOS FUNCIONAIS
 
 
-	O sistema deverá possibilitar o CRUD de Empresas  
+	O sistema deverá possibilitar o CRUD de Estabelecimentos  
 	O sistema deverá possibilitar a inserção de informações de Razão Social, CNPJ, Insc Estadual, Endereço, Cidade e Fone de uma respectiva Empresa.
+---
+	O sistema deverá possibilitar o CRUD de Funcionários  
+	O sistema deverá possibilitar a inserção de informações de nome, cpf, data de nascimento, função, endereço e em qual estabelecimento trabalha de um respectivo Funcionário.
 --- 
 	O sistema deverá possibilitar o CRUD Categoria de Produtos  
 	O sistema deverá possibilitar a inserção da descrição de uma respectiva categoria de produtos
 --- 
 	O sistema deverá possibilitar o CRUD de produtos
-	O sistema deverá possibilitar a inserção da descrição descrição, preço e categoria de um respectivo produto
+	O sistema deverá possibilitar a inserção do nome, preço, quantidade, unidade de medida, se é cozido, código do estabelecimento e categoria de um respectivo produto
 ---
 	O sistema deverá possibilitar o CRUD de Comandas
-	O sistema deverá possibilitar a inserção da mesa, produto, quantidade e valor pago de uma respectiva comanda
+	O sistema deverá possibilitar a inserção da mesa, produto, quantidade, valor total, valor de desconto e valor pago de uma respectiva comanda
 	O sistema deverá quando inserida uma nova comanda deverá gerar automaticamente o código, a data e a hora de uma respectiva comanda
 ---
 	O sistema deverá gerar de forma autônoma os pedidos para a cozinha, a partir do lançamento de itens em uma comanda
 	O sistema deverá ao ser inserido um produto em um determinada comanda, gerar automaticamente uma tabela de Pedido com os dados de data e hora do pedido, código da comanda, código do produto, data e hora da finalização do pedido e a quantidade do produto 
 	O sistema deverá ao gerar a tabela de pedido, persistir os dados de data e hora do pedido, código da comanda, código do produto e quantidade do produto
 	O sistema dever persistir a data e hora da finalização do pedido quando o botão de finalizar pedido for acionado
+	O sistema dever persistir a data e hora da entrega quando um pedido for entregue
 ---
 	O sistema deve mascarar do usuário a digitação de senhas.
 ---
@@ -30,8 +34,11 @@
 	O sistema deverá permitir o pagamento parcial de uma comanda
 ---
 	O sistema deverá possibilitar a listagem de vendas de itens de uma determinada data
----
+
+```
+--- a discutir
 	O sistema receberá através de uma API os dados referente a UF e Cidades de uma UF. (CEP*)
+  ```
 
 # REQUISITOS NÃO FUNCIONAIS
 
@@ -54,7 +61,7 @@
 ---
 	Na interface de Produção deverá haver um botão para identificar quando o pedido foi finalizado
 ---
-	Nos cadastros de Categoria, Produtos e Comanda deverá haver o código da empresa solicitado
+	Nos cadastros de Produtos e Comanda deverá haver o código da empresa solicitado
 ---
 	Nas consultas de produtos não pode aparecer produtos de outra Empresa
 ---

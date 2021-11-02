@@ -58,9 +58,7 @@ public class ProdutoController {
 	@GetMapping(value = "/produto/{id}/deletar")
 	public String deletar(@PathVariable int id, Model model, HttpSession session) {
 		produtoDAO.deleteProduto(id);
-		
 		return "redirect:/produtos";
-
 	}
 
 }

@@ -56,10 +56,13 @@
         </property>       
     </bean>
  
- 	<bean id="ProdutoDAO" class="edu.com.unoesc.restaurante.dao.ProdutoDAOImpl"></bean>
  	<bean id="CategoriaDAO" class="edu.com.unoesc.restaurante.dao.CategoriaDAOImpl"></bean>
- 	<bean id="EstabelecimentoDAO" class="edu.com.unoesc.restaurante.dao.EstabelecimentoDAOImpl"></bean>
+ 	<bean id="ComandaDAO" class="edu.com.unoesc.restaurante.dao.ComandaDAOImpl"></bean>
  	<bean id="EnderecoDAO" class="edu.com.unoesc.restaurante.dao.EnderecoDAOImpl"></bean>
+ 	<bean id="EstabelecimentoDAO" class="edu.com.unoesc.restaurante.dao.EstabelecimentoDAOImpl"></bean>
+ 	<bean id="FuncionarioDAO" class="edu.com.unoesc.restaurante.dao.FuncionarioDAOImpl"></bean>
+ 	<bean id="PedidoDAO" class="edu.com.unoesc.restaurante.dao.PedidoDAOImpl"></bean>
+ 	<bean id="ProdutoDAO" class="edu.com.unoesc.restaurante.dao.ProdutoDAOImpl"></bean>
  	
     
     <tx:annotation-driven />

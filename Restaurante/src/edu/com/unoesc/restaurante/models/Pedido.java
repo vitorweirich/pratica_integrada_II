@@ -19,7 +19,7 @@ public class Pedido {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "quantidade")
+	@Column(name = "qntd")
 	private Integer quantidade;
 	@Column(name = "data_hora_criacao")
 	private LocalDateTime dataCriacao;
@@ -27,7 +27,7 @@ public class Pedido {
 	private LocalDateTime dataFinalizacao;
 	@Column(name = "data_hora_entrega")
 	private LocalDateTime dataEntrega;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne()
 	@JoinColumn(name = "id_comandas", referencedColumnName = "id")
 	private Comanda comanda;
 	@ManyToOne(cascade = CascadeType.ALL)

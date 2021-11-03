@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,8 +22,6 @@ public class Comanda {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "nome")
-	private String nome;
 	@Column(name = "valor_total")
 	private Double valorTotal;
 	@Column(name = "desconto")
@@ -40,7 +39,7 @@ public class Comanda {
 	private Estabelecimento estabelecimento;
 
 	// TODO: Pensar mapemento de comanda -> pedidos -> produtos
-	@OneToMany(mappedBy = "comanda")
+	@OneToMany(mappedBy = "comanda", fetch = FetchType.EAGER)
 	private Set<Pedido> pedidos;
 
 	public Comanda() {
@@ -61,14 +60,6 @@ public class Comanda {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getNome() {
-		return nome;
-	}
-
-	public void setNome(String nome) {
-		this.nome = nome;
 	}
 
 	public Double getValorTotal() {
@@ -137,7 +128,6 @@ public class Comanda {
 		result = prime * result + ((estabelecimento == null) ? 0 : estabelecimento.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((mesa == null) ? 0 : mesa.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((pedidos == null) ? 0 : pedidos.hashCode());
 		result = prime * result + ((valorPago == null) ? 0 : valorPago.hashCode());
 		result = prime * result + ((valorTotal == null) ? 0 : valorTotal.hashCode());
@@ -182,11 +172,6 @@ public class Comanda {
 			if (other.mesa != null)
 				return false;
 		} else if (!mesa.equals(other.mesa))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
 			return false;
 		if (pedidos == null) {
 			if (other.pedidos != null)

@@ -23,7 +23,6 @@ public class ProdutoController {
 	@Autowired
 	ProdutoDAO produtoDAO;
 
-
 	@GetMapping(value = "/produtos")
 	public String produtosList(Model m) {
 		ArrayList<Produto> produtos = new ArrayList<Produto>(produtoDAO.getProdutos());

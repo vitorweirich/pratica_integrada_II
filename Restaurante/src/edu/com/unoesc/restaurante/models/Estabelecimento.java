@@ -34,16 +34,8 @@ public class Estabelecimento {
     @JoinColumn(name = "id_endereco", referencedColumnName = "id")
 	private Endereco endereco;
 	
-	@OneToMany(mappedBy = "funcionarios")
+	@OneToMany(mappedBy = "estabelecimento")
 	private Set<Funcionario> funcionarios;
-
-	public String getRazaoSocial() {
-		return razaoSocial;
-	}
-
-	public void setRazaoSocial(String razaoSocial) {
-		this.razaoSocial = razaoSocial;
-	}
 
 	public Set<Funcionario> getFuncionarios() {
 		return funcionarios;

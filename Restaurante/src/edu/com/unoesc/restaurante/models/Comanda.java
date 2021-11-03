@@ -1,6 +1,7 @@
 package edu.com.unoesc.restaurante.models;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
@@ -38,9 +40,19 @@ public class Comanda {
 	private Estabelecimento estabelecimento;
 
 	// TODO: Pensar mapemento de comanda -> pedidos -> produtos
-	
+	@OneToMany(mappedBy = "comanda")
+	private Set<Pedido> pedidos;
+
 	public Comanda() {
 		this.id = -1;
+	}
+
+	public Set<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(Set<Pedido> pedidos) {
+		this.pedidos = pedidos;
 	}
 
 	public Integer getId() {
@@ -126,6 +138,7 @@ public class Comanda {
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((mesa == null) ? 0 : mesa.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((pedidos == null) ? 0 : pedidos.hashCode());
 		result = prime * result + ((valorPago == null) ? 0 : valorPago.hashCode());
 		result = prime * result + ((valorTotal == null) ? 0 : valorTotal.hashCode());
 		return result;
@@ -174,6 +187,11 @@ public class Comanda {
 			if (other.nome != null)
 				return false;
 		} else if (!nome.equals(other.nome))
+			return false;
+		if (pedidos == null) {
+			if (other.pedidos != null)
+				return false;
+		} else if (!pedidos.equals(other.pedidos))
 			return false;
 		if (valorPago == null) {
 			if (other.valorPago != null)

@@ -8,37 +8,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.com.unoesc.restaurante.models.Produto;
+import edu.com.unoesc.restaurante.models.Estabelecimento;
 
 @Repository
-public class ProdutoDAOImpl implements ProdutoDAO {
+public class EstabelecimentoDAOImpl implements EstabelecimentoDAO {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
 	@Transactional
-	public Produto getProdutoById(Integer id) {
+	public Estabelecimento getEstabelecimentoById(Integer id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Produto p = (Produto) session.get(Produto.class, id);
+		Estabelecimento e = (Estabelecimento) session.get(Estabelecimento.class, id);
 
-		return p;
+		return e;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<Produto> getProdutos() {
-		return (List<Produto>) this.sessionFactory.getCurrentSession().createQuery("from Produto").list();
+	public List<Estabelecimento> getEstabelecimentos() {
+		return (List<Estabelecimento>) this.sessionFactory.getCurrentSession().createQuery("from Estabelecimento").list();
 	}
 
 	@Override
 	@Transactional
-	public boolean deleteProduto(int id) {
+	public boolean deleteEstabelecimento(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Produto p = (Produto) session.load(Produto.class, id);
-		if (p!=null) {
-			session.delete(p);
+		Estabelecimento e = (Estabelecimento) session.load(Estabelecimento.class, id);
+		if (e!=null) {
+			session.delete(e);
 			return true;
 		}
 		return false;
@@ -46,17 +46,17 @@ public class ProdutoDAOImpl implements ProdutoDAO {
 
 	@Override
 	@Transactional
-	public boolean insertProduto(Produto p) {
-		this.sessionFactory.getCurrentSession().save(p);
+	public boolean insertEstabelecimento(Estabelecimento e) {
+		this.sessionFactory.getCurrentSession().save(e);
 
 		return false;
 	}
 
 	@Override
 	@Transactional
-	public boolean updateProduto(Produto p) {
+	public boolean updateEstabelecimento(Estabelecimento e) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.update(p);
+		session.update(e);
 		return true;
 	}
 

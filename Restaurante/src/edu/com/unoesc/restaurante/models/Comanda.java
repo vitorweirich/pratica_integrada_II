@@ -1,7 +1,8 @@
 package edu.com.unoesc.restaurante.models;
 
 import java.time.LocalDateTime;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "comandas")
@@ -39,19 +42,20 @@ public class Comanda {
 	private Estabelecimento estabelecimento;
 
 	// TODO: Pensar mapemento de comanda -> pedidos -> produtos
-	@OneToMany(mappedBy = "comanda", fetch = FetchType.EAGER)
-	private Set<Pedido> pedidos;
+	@JsonBackReference()
+	@OneToMany(mappedBy = "comanda", fetch = FetchType.LAZY)
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
 
-	public Comanda() {
-		this.id = -1;
-	}
-
-	public Set<Pedido> getPedidos() {
+	public List<Pedido> getPedidos() {
 		return pedidos;
 	}
 
-	public void setPedidos(Set<Pedido> pedidos) {
+	public void setPedidos(List<Pedido> pedidos) {
 		this.pedidos = pedidos;
+	}
+
+	public Comanda() {
+		this.id = -1;
 	}
 
 	public Integer getId() {

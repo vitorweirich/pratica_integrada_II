@@ -17,16 +17,50 @@
 			<tr>
 				<th>*</th>
 				<th>Descrição</th>
-				<th>-</th>
-				<th>-</th>
 			</tr>
 			<c:forEach var="p" items="${listProdutos}">
 				<tr>
 					<td>${p.id}</td>
-					<td>${p.descricao}</td>
-					<td><a href="produto/${p.id}">Editar</a></td>
-					<td><a href="produto/${p.id}/deletar">Deletar</a></td>
+					<td>${p.estabelecimento.endereco.cidade}</td>
 				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	
+	<div
+		style="position: relative; display: inline-block; width: 50%; margin-bottom: 40px; margin-left: 15%; border-collapse: collapse;">
+		<table border="2" width="70%" cellpadding="2">
+			<tr>
+				<th>*</th>
+				<th>Nome</th>
+				<th>CNPJ</th>
+			</tr>
+			<c:forEach var="e" items="${estabelecimentos}">
+				<tr>
+					<td>${e.id}</td>
+					<td>${e.nome}</td>
+					<td>${e.cnpj}</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	
+	<div
+		style="position: relative; display: inline-block; width: 50%; margin-bottom: 40px; margin-left: 15%; border-collapse: collapse;">
+		<table border="2" width="70%" cellpadding="2">
+		
+			<tr>
+				<th>*</th>
+				<th>Data pedidos</th>
+			</tr>
+			<c:forEach var="c" items="${comandas}">
+				<c:forEach var="pe" items="${ped}">
+					<tr>
+						<td>${c.id}</td>
+
+						<td>${ped.dataCriacao}</td>
+					</tr>
+				</c:forEach>
 			</c:forEach>
 		</table>
 	</div>
@@ -37,11 +71,9 @@
 			modelAttribute="produto">
 			<form:hidden path="produto.id" />
 			<p>
-				Descricao:
-				<form:input path="produto.descricao" />
-
+				Nome:
+				<form:input path="produto.nome" />
 			</p>
-
 			<input type="submit" value="Salvar" />
 
 		</form>

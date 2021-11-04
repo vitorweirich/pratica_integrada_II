@@ -1,6 +1,7 @@
 package edu.com.unoesc.restaurante.controllers;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,7 +14,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import edu.com.unoesc.restaurante.dao.ComandaDAO;
+import edu.com.unoesc.restaurante.dao.EstabelecimentoDAO;
 import edu.com.unoesc.restaurante.dao.ProdutoDAO;
+import edu.com.unoesc.restaurante.models.Comanda;
 import edu.com.unoesc.restaurante.models.Produto;
 
 @Controller
@@ -23,6 +27,12 @@ public class ProdutoController {
 	@Autowired
 	ProdutoDAO produtoDAO;
 
+	@Autowired
+	private EstabelecimentoDAO estabelecimentoDAOImpl;
+	
+	@Autowired
+	private ComandaDAO comandaDAOImpl;
+
 	@GetMapping(value = "/produtos")
 	public String produtosList(Model m) {
 		ArrayList<Produto> produtos = new ArrayList<Produto>(produtoDAO.getProdutos());
@@ -30,6 +40,10 @@ public class ProdutoController {
 		m.addAttribute("listProdutos", produtos);
 		m.addAttribute("produto", new Produto());
 
+		m.addAttribute("estabelecimentos", estabelecimentoDAOImpl.getEstabelecimentos());
+		List<Comanda> comandas = comandaDAOImpl.getComandas();
+		comandas.forEach(c -> c.getPedidos().forEach(pe -> pe.getDataCriacao()));
+		m.addAttribute("comandas", comandaDAOImpl.getComandas());
 		return "produto";
 	}
 
@@ -40,7 +54,7 @@ public class ProdutoController {
 		} else {
 			produtoDAO.updateProduto(produto);
 		}
-		
+
 		return "redirect:/produtos";
 	}
 
@@ -53,7 +67,7 @@ public class ProdutoController {
 		return "produto";
 
 	}
-	
+
 	@GetMapping(value = "/produto/{id}/deletar")
 	public String deletar(@PathVariable int id, Model model, HttpSession session) {
 		produtoDAO.deleteProduto(id);

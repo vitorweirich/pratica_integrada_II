@@ -5,12 +5,17 @@ import java.time.LocalDateTime;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "pedidos")
@@ -27,10 +32,12 @@ public class Pedido {
 	private LocalDateTime dataFinalizacao;
 	@Column(name = "data_hora_entrega")
 	private LocalDateTime dataEntrega;
-	@ManyToOne()
+	@JsonManagedReference
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "id_comandas", referencedColumnName = "id")
 	private Comanda comanda;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@JsonManagedReference
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_produtos", referencedColumnName = "id")
 	private Produto produto;
 	

@@ -1,14 +1,21 @@
 package edu.com.unoesc.restaurante.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "produtos")
@@ -33,6 +40,18 @@ public class Produto {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_categoria", referencedColumnName = "id")
 	private Categoria categoria;
+	
+	@JsonBackReference()
+	@OneToMany(mappedBy = "produto", fetch = FetchType.EAGER)
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
 
 	public Produto() {
 		this.id = -1;
@@ -111,6 +130,7 @@ public class Produto {
 		result = prime * result + ((estabelecimento == null) ? 0 : estabelecimento.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
+		result = prime * result + ((pedidos == null) ? 0 : pedidos.hashCode());
 		result = prime * result + ((preco == null) ? 0 : preco.hashCode());
 		result = prime * result + ((quantidade == null) ? 0 : quantidade.hashCode());
 		result = prime * result + ((unidadeMedida == null) ? 0 : unidadeMedida.hashCode());
@@ -147,6 +167,11 @@ public class Produto {
 			if (other.nome != null)
 				return false;
 		} else if (!nome.equals(other.nome))
+			return false;
+		if (pedidos == null) {
+			if (other.pedidos != null)
+				return false;
+		} else if (!pedidos.equals(other.pedidos))
 			return false;
 		if (preco == null) {
 			if (other.preco != null)

@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -127,7 +126,10 @@ public class ProdutoDaoTest {
 		assertEquals(p.getId(), pedidoDAOImpl.getPedidoById(p.getId()).getId());
 		
 		
-		Set<Pedido> pedidos = comandaDAOImpl.getComandaById(8).getPedidos();
-		System.out.println(pedidos);
+//		List<Pedido> pedidos = comandaDAOImpl.getComandaById(8).getPedidos();
+//		System.out.println(pedidos);
+		
+//		Estabelecimento estabelecimentoById = estabelecimentoDAOImpl.getEstabelecimentoById(35);
+//		estabelecimentoById.getFuncionarios().forEach(fun -> System.out.println(fun.getNome()));
 	}
 }

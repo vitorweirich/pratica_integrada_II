@@ -33,11 +33,13 @@
  
 	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
 	 
-<!-- 	    <property name="converters"> -->
-<!-- 	        <list> -->
-<!-- 	            <bean id="contaConverter" class="edu.unoesc.cf.converters.ContaConverter" /> -->
-<!-- 	        </list> -->
-<!-- 	    </property> -->
+	    <property name="converters">
+	        <list>
+	            <bean id="ComandaConverter" class="edu.com.unoesc.restaurante.converters.ComandaConverter" />
+	            <bean id="PedidoConverter" class="edu.com.unoesc.restaurante.converters.PedidoConverter" />
+	            <bean id="ProdutoConverter" class="edu.com.unoesc.restaurante.converters.ProdutoConverter" />
+	        </list>
+	    </property>
 	</bean>
 	        	
 	<tx:annotation-driven transaction-manager="transactionManager"/>

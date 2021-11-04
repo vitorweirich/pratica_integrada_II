@@ -54,11 +54,11 @@
 				<th>Data pedidos</th>
 			</tr>
 			<c:forEach var="c" items="${comandas}">
-				<c:forEach var="pe" items="${ped}">
+				<c:forEach var="pe" items="${c.produtos}">
 					<tr>
 						<td>${c.id}</td>
 
-						<td>${ped.dataCriacao}</td>
+						<td>${pe.nome}</td>
 					</tr>
 				</c:forEach>
 			</c:forEach>
@@ -68,11 +68,11 @@
 	<div
 		style="position: relative; display: inline-block; width: 50%; margin-bottom: 40px; margin-left: 15%; border-collapse: collapse;">
 		<form action="/Restaurante/produtoSave" method="POST"
-			modelAttribute="produto">
-			<form:hidden path="produto.id" />
+			modelAttribute="produtoForm">
+			<form:hidden path="produtoForm.id" />
 			<p>
 				Nome:
-				<form:input path="produto.nome" />
+				<form:input path="produtoForm.nome" />
 			</p>
 			<input type="submit" value="Salvar" />
 

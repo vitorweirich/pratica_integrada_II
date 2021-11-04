@@ -2,7 +2,6 @@ package edu.com.unoesc.restaurante.models;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -11,10 +10,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
@@ -33,15 +30,13 @@ public class Pedido {
 	@Column(name = "data_hora_entrega")
 	private LocalDateTime dataEntrega;
 	@JsonManagedReference
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_comandas", referencedColumnName = "id")
 	private Comanda comanda;
 	@JsonManagedReference
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_produtos", referencedColumnName = "id")
 	private Produto produto;
-	
-	// TODO: Pensar mapemento de comanda -> pedidos -> produtos
 
 	public Integer getId() {
 		return id;

@@ -12,8 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -41,18 +41,9 @@ public class Comanda {
 	@JoinColumn(name = "id_estabelecimento", referencedColumnName = "id")
 	private Estabelecimento estabelecimento;
 
-	// TODO: Pensar mapemento de comanda -> pedidos -> produtos
 	@JsonBackReference()
-	@OneToMany(mappedBy = "comanda", fetch = FetchType.LAZY)
-	private List<Pedido> pedidos = new ArrayList<Pedido>();
-
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
+	@ManyToMany(mappedBy = "comandas", fetch = FetchType.EAGER)
+	private List<Produto> produtos = new ArrayList<Produto>();
 
 	public Comanda() {
 		this.id = -1;
@@ -122,6 +113,14 @@ public class Comanda {
 		this.estabelecimento = estabelecimento;
 	}
 
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -132,7 +131,7 @@ public class Comanda {
 		result = prime * result + ((estabelecimento == null) ? 0 : estabelecimento.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((mesa == null) ? 0 : mesa.hashCode());
-		result = prime * result + ((pedidos == null) ? 0 : pedidos.hashCode());
+		result = prime * result + ((produtos == null) ? 0 : produtos.hashCode());
 		result = prime * result + ((valorPago == null) ? 0 : valorPago.hashCode());
 		result = prime * result + ((valorTotal == null) ? 0 : valorTotal.hashCode());
 		return result;
@@ -177,10 +176,10 @@ public class Comanda {
 				return false;
 		} else if (!mesa.equals(other.mesa))
 			return false;
-		if (pedidos == null) {
-			if (other.pedidos != null)
+		if (produtos == null) {
+			if (other.produtos != null)
 				return false;
-		} else if (!pedidos.equals(other.pedidos))
+		} else if (!produtos.equals(other.produtos))
 			return false;
 		if (valorPago == null) {
 			if (other.valorPago != null)

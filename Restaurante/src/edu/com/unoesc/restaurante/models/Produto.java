@@ -11,8 +11,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -40,21 +41,27 @@ public class Produto {
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_categoria", referencedColumnName = "id")
 	private Categoria categoria;
-	
+
 	@JsonBackReference()
-	@OneToMany(mappedBy = "produto", fetch = FetchType.EAGER)
-	private List<Pedido> pedidos = new ArrayList<Pedido>();
-
-	public List<Pedido> getPedidos() {
-		return pedidos;
-	}
-
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "pedidos", joinColumns = { @JoinColumn(name = "id_produtos") }, inverseJoinColumns = {
+			@JoinColumn(name = "id_comandas") })
+	private List<Comanda> comandas = new ArrayList<Comanda>();
 
 	public Produto() {
 		this.id = -1;
+	}
+
+	public Produto(Integer id, String nome, Double preco, Integer quantidade, String unidadeMedida, boolean cozido,
+			Estabelecimento estabelecimento, Categoria categoria) {
+		this.id = id;
+		this.nome = nome;
+		this.preco = preco;
+		this.quantidade = quantidade;
+		this.unidadeMedida = unidadeMedida;
+		this.cozido = cozido;
+		this.estabelecimento = estabelecimento;
+		this.categoria = categoria;
 	}
 
 	public Integer getId() {
@@ -121,16 +128,24 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
+	public List<Comanda> getComandas() {
+		return comandas;
+	}
+
+	public void setComandas(List<Comanda> comandas) {
+		this.comandas = comandas;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
+		result = prime * result + ((comandas == null) ? 0 : comandas.hashCode());
 		result = prime * result + (cozido ? 1231 : 1237);
 		result = prime * result + ((estabelecimento == null) ? 0 : estabelecimento.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((pedidos == null) ? 0 : pedidos.hashCode());
 		result = prime * result + ((preco == null) ? 0 : preco.hashCode());
 		result = prime * result + ((quantidade == null) ? 0 : quantidade.hashCode());
 		result = prime * result + ((unidadeMedida == null) ? 0 : unidadeMedida.hashCode());
@@ -151,6 +166,11 @@ public class Produto {
 				return false;
 		} else if (!categoria.equals(other.categoria))
 			return false;
+		if (comandas == null) {
+			if (other.comandas != null)
+				return false;
+		} else if (!comandas.equals(other.comandas))
+			return false;
 		if (cozido != other.cozido)
 			return false;
 		if (estabelecimento == null) {
@@ -167,11 +187,6 @@ public class Produto {
 			if (other.nome != null)
 				return false;
 		} else if (!nome.equals(other.nome))
-			return false;
-		if (pedidos == null) {
-			if (other.pedidos != null)
-				return false;
-		} else if (!pedidos.equals(other.pedidos))
 			return false;
 		if (preco == null) {
 			if (other.preco != null)

@@ -69,10 +69,17 @@ public class ProdutoController {
 		return ResponseEntity.status(200).body(comandas);
 	}
 	
-	@GetMapping("/estabelecimentos")
-	public ResponseEntity<List<EstabelecimentoDTO>> getEstabelecimentos() {
+	@GetMapping("/estabelecimentosDTO")
+	public ResponseEntity<List<EstabelecimentoDTO>> getEstabelecimentosDTO() {
 		List<Estabelecimento> estabelecimentos = estabelecimentoDAOImpl.getEstabelecimentos();
+//		estabelecimentos.forEach(e -> e.getFuncionarios().forEach(f -> System.out.println(f.getNome())));
 		return ResponseEntity.status(200).body(EstabelecimentoDTO.converter(estabelecimentos));
+	}
+	@GetMapping("/estabelecimentos")
+	public ResponseEntity<List<Estabelecimento>> getEstabelecimentos() {
+		List<Estabelecimento> estabelecimentos = estabelecimentoDAOImpl.getEstabelecimentos();
+//		estabelecimentos.forEach(e -> e.getFuncionarios().forEach(f -> System.out.println(f.getNome())));
+		return ResponseEntity.status(200).body(estabelecimentos);
 	}
 	
 	@GetMapping("/funcionario/{id}")
@@ -81,7 +88,8 @@ public class ProdutoController {
 		System.out.println(id);
 		System.out.println(id);
 		System.out.println(id);
-		return ResponseEntity.status(200).body(funcionarioDAOImpl.getFuncionarioWithEstabelecimentoById(id));
+		FuncionarioDTO f = funcionarioDAOImpl.getFuncionarioWithEstabelecimentoById(id);
+		return ResponseEntity.status(200).body(f);
 	}
 	
 	@GetMapping("/funcionarios")
@@ -115,7 +123,7 @@ public class ProdutoController {
 		est.setTelefone("89770000");
 		est.setInscricaoEstadual("Naum sei");
 		est.setNome("Frangaria");
-		est.setRezaoSocial("também não sei");
+		est.setRazaoSocial("também não sei");
 		estabelecimentoDAOImpl.insertEstabelecimento(est);
 		
 		// Insert Funcionario

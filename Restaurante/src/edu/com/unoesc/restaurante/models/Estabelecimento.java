@@ -1,12 +1,10 @@
 package edu.com.unoesc.restaurante.models;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,9 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "estabelecimento")
@@ -37,20 +32,12 @@ public class Estabelecimento {
 	@Column(name = "telefone")
 	private String telefone;
 	@OneToOne()
-    @JoinColumn(name = "id_endereco", referencedColumnName = "id")
+	@JoinColumn(name = "id_endereco", referencedColumnName = "id")
 	private Endereco endereco;
-	
-	@JsonIgnore
+
+//	@JsonIgnore
 	@OneToMany(mappedBy = "estabelecimento")
-	private Set<Funcionario> funcionarios = new HashSet<Funcionario>();
-
-	public Set<Funcionario> getFuncionarios() {
-		return funcionarios;
-	}
-
-	public void setFuncionarios(Set<Funcionario> funcionarios) {
-		this.funcionarios = funcionarios;
-	}
+	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();
 
 	@Override
 	public int hashCode() {
@@ -135,12 +122,12 @@ public class Estabelecimento {
 		this.nome = nome;
 	}
 
-	public String getRezaoSocial() {
+	public String getRazaoSocial() {
 		return razaoSocial;
 	}
 
-	public void setRezaoSocial(String rezaoSocial) {
-		this.razaoSocial = rezaoSocial;
+	public void setRazaoSocial(String razaoSocial) {
+		this.razaoSocial = razaoSocial;
 	}
 
 	public String getCnpj() {
@@ -173,6 +160,14 @@ public class Estabelecimento {
 
 	public void setEndereco(Endereco endereco) {
 		this.endereco = endereco;
+	}
+
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
+	}
+
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
 	}
 
 }

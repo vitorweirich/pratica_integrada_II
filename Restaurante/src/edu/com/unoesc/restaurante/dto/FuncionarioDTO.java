@@ -14,7 +14,7 @@ public class FuncionarioDTO {
 	private String cpf;
 	private String funcao;
 	private Endereco endereco;
-	private Estabelecimento estabelecimento;
+	private EstabelecimentoDTO estabelecimento;
 
 	public FuncionarioDTO(Integer id, String nome, LocalDate nascimento, String cpf, String funcao, Endereco endereco,
 			Estabelecimento estabelecimento) {
@@ -24,7 +24,7 @@ public class FuncionarioDTO {
 		this.cpf = cpf;
 		this.funcao = funcao;
 		this.endereco = endereco;
-		this.estabelecimento = estabelecimento;
+		this.estabelecimento = new EstabelecimentoDTO(estabelecimento);
 	}
 
 	public FuncionarioDTO(Funcionario f) {
@@ -34,7 +34,7 @@ public class FuncionarioDTO {
 		this.cpf = f.getCpf();
 		this.funcao = f.getFuncao();
 		this.endereco = f.getEndereco();
-		this.estabelecimento = f.getEstabelecimento();
+		this.estabelecimento = new EstabelecimentoDTO(f.getEstabelecimento());
 	}
 
 	public Integer getId() {
@@ -85,11 +85,11 @@ public class FuncionarioDTO {
 		this.endereco = endereco;
 	}
 
-	public Estabelecimento getEstabelecimento() {
+	public EstabelecimentoDTO getEstabelecimento() {
 		return estabelecimento;
 	}
 
-	public void setEstabelecimento(Estabelecimento estabelecimento) {
+	public void EstabelecimentoDTO(EstabelecimentoDTO estabelecimento) {
 		this.estabelecimento = estabelecimento;
 	}
 

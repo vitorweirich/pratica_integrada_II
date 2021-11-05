@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import edu.com.unoesc.restaurante.models.Endereco;
 import edu.com.unoesc.restaurante.models.Estabelecimento;
+import edu.com.unoesc.restaurante.models.Funcionario;
 
 public class EstabelecimentoDTO {
 
@@ -15,15 +16,25 @@ public class EstabelecimentoDTO {
 	private String inscricaoEstadual;
 	private String telefone;
 	private Endereco endereco;
+	private List<Funcionario> funcionarios;
 
 	public EstabelecimentoDTO(Estabelecimento e) {
 		this.id = e.getId();
 		this.nome = e.getNome();
-		this.razaoSocial = e.getRezaoSocial();
+		this.razaoSocial = e.getRazaoSocial();
 		this.cnpj = e.getCnpj();
 		this.inscricaoEstadual = e.getInscricaoEstadual();
 		this.telefone = e.getTelefone();
 		this.endereco = e.getEndereco();
+		this.funcionarios = e.getFuncionarios();
+	}
+
+	public List<Funcionario> getFuncionarios() {
+		return funcionarios;
+	}
+
+	public void setFuncionarios(List<Funcionario> funcionarios) {
+		this.funcionarios = funcionarios;
 	}
 
 	public Integer getId() {

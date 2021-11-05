@@ -35,9 +35,9 @@ public class Funcionario {
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "id_endereco", referencedColumnName = "id")
 	private Endereco endereco;
-//	@JsonIgnore
+	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_estabelecimento", referencedColumnName = "id")
+	@JoinColumn(name = "id_estabelecimento")
 	private Estabelecimento estabelecimento;
 
 	public Integer getId() {

@@ -1,44 +1,41 @@
-package edu.com.unoesc.restaurante.models;
+package edu.com.unoesc.restaurante.dto;
 
 import java.time.LocalDate;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
+import edu.com.unoesc.restaurante.models.Endereco;
+import edu.com.unoesc.restaurante.models.Estabelecimento;
+import edu.com.unoesc.restaurante.models.Funcionario;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+public class FuncionarioDTO {
 
-@Entity
-@Table(name = "funcionarios")
-public class Funcionario {
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column(name = "nome")
 	private String nome;
-	@Column(name = "data_nasc")
 	private LocalDate nascimento;
-	@Column(name = "cpf")
 	private String cpf;
-	@Column(name = "funcao")
 	private String funcao;
-	@OneToOne(cascade = CascadeType.ALL)
-	@JoinColumn(name = "id_endereco", referencedColumnName = "id")
 	private Endereco endereco;
-//	@JsonIgnore
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_estabelecimento", referencedColumnName = "id")
 	private Estabelecimento estabelecimento;
+
+	public FuncionarioDTO(Integer id, String nome, LocalDate nascimento, String cpf, String funcao, Endereco endereco,
+			Estabelecimento estabelecimento) {
+		this.id = id;
+		this.nome = nome;
+		this.nascimento = nascimento;
+		this.cpf = cpf;
+		this.funcao = funcao;
+		this.endereco = endereco;
+		this.estabelecimento = estabelecimento;
+	}
+
+	public FuncionarioDTO(Funcionario f) {
+		this.id = f.getId();
+		this.nome = f.getNome();
+		this.nascimento = f.getNascimento();
+		this.cpf = f.getCpf();
+		this.funcao = f.getFuncao();
+		this.endereco = f.getEndereco();
+		this.estabelecimento = f.getEstabelecimento();
+	}
 
 	public Integer getId() {
 		return id;
@@ -118,7 +115,7 @@ public class Funcionario {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Funcionario other = (Funcionario) obj;
+		FuncionarioDTO other = (FuncionarioDTO) obj;
 		if (cpf == null) {
 			if (other.cpf != null)
 				return false;

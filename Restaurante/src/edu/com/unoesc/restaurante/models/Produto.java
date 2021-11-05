@@ -42,11 +42,10 @@ public class Produto {
 	@JoinColumn(name = "id_categoria", referencedColumnName = "id")
 	private Categoria categoria;
 
-	@JsonBackReference()
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "pedidos", joinColumns = { @JoinColumn(name = "id_produtos") }, inverseJoinColumns = {
-			@JoinColumn(name = "id_comandas") })
-	private List<Comanda> comandas = new ArrayList<Comanda>();
+//	@ManyToMany(fetch = FetchType.EAGER)
+//	@JoinTable(name = "pedidos", joinColumns = { @JoinColumn(name = "id_produtos") }, inverseJoinColumns = {
+//			@JoinColumn(name = "id_comandas") })
+//	private List<Comanda> comandas = new ArrayList<Comanda>();
 
 	public Produto() {
 		this.id = -1;
@@ -128,20 +127,19 @@ public class Produto {
 		this.categoria = categoria;
 	}
 
-	public List<Comanda> getComandas() {
-		return comandas;
-	}
-
-	public void setComandas(List<Comanda> comandas) {
-		this.comandas = comandas;
-	}
+//	public List<Comanda> getComandas() {
+//		return comandas;
+//	}
+//
+//	public void setComandas(List<Comanda> comandas) {
+//		this.comandas = comandas;
+//	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((categoria == null) ? 0 : categoria.hashCode());
-		result = prime * result + ((comandas == null) ? 0 : comandas.hashCode());
 		result = prime * result + (cozido ? 1231 : 1237);
 		result = prime * result + ((estabelecimento == null) ? 0 : estabelecimento.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -165,11 +163,6 @@ public class Produto {
 			if (other.categoria != null)
 				return false;
 		} else if (!categoria.equals(other.categoria))
-			return false;
-		if (comandas == null) {
-			if (other.comandas != null)
-				return false;
-		} else if (!comandas.equals(other.comandas))
 			return false;
 		if (cozido != other.cozido)
 			return false;

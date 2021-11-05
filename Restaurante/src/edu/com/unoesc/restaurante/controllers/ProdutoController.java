@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,6 +26,8 @@ import edu.com.unoesc.restaurante.dao.EstabelecimentoDAO;
 import edu.com.unoesc.restaurante.dao.FuncionarioDAO;
 import edu.com.unoesc.restaurante.dao.PedidoDAO;
 import edu.com.unoesc.restaurante.dao.ProdutoDAO;
+import edu.com.unoesc.restaurante.dto.EstabelecimentoDTO;
+import edu.com.unoesc.restaurante.dto.FuncionarioDTO;
 import edu.com.unoesc.restaurante.form.ProdutoAdicionarForm;
 import edu.com.unoesc.restaurante.models.Categoria;
 import edu.com.unoesc.restaurante.models.Comanda;
@@ -58,6 +61,38 @@ public class ProdutoController {
 	
 	@Autowired
 	private ProdutoDAO produtoDAO;
+	
+	@GetMapping("/comandas")
+	public ResponseEntity<List<Comanda>> getComandas() {
+		List<Comanda> comandas = comandaDAOImpl.getComandas();
+		comandas.forEach(c -> c.getProdutos().forEach(p -> System.out.println(p.getNome())));
+		return ResponseEntity.status(200).body(comandas);
+	}
+	
+	@GetMapping("/estabelecimentos")
+	public ResponseEntity<List<EstabelecimentoDTO>> getEstabelecimentos() {
+		List<Estabelecimento> estabelecimentos = estabelecimentoDAOImpl.getEstabelecimentos();
+		return ResponseEntity.status(200).body(EstabelecimentoDTO.converter(estabelecimentos));
+	}
+	
+	@GetMapping("/funcionario/{id}")
+	public ResponseEntity<FuncionarioDTO> getFuncionario(@PathVariable("id") Integer id) {
+		System.out.println(id);
+		System.out.println(id);
+		System.out.println(id);
+		System.out.println(id);
+		return ResponseEntity.status(200).body(funcionarioDAOImpl.getFuncionarioWithEstabelecimentoById(id));
+	}
+	
+	@GetMapping("/funcionarios")
+	public ResponseEntity<List<Funcionario>> getFuncionarios() {
+		System.out.println("sasaa");
+		System.out.println("sasaa");
+		System.out.println("sasaa");
+		System.out.println("sasaa");
+		List<Funcionario> funcionarios = funcionarioDAOImpl.getFuncionarios();
+		return ResponseEntity.status(200).body(funcionarios);
+	}
 	
 	@GetMapping()
 	public String cadastraTeste() {

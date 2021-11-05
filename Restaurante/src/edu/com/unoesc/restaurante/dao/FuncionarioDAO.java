@@ -2,11 +2,13 @@ package edu.com.unoesc.restaurante.dao;
 
 import java.util.List;
 
+import edu.com.unoesc.restaurante.dto.FuncionarioDTO;
 import edu.com.unoesc.restaurante.models.Funcionario;
 
 public interface FuncionarioDAO {
 
 	Funcionario getFuncionarioById (Integer id);
+	FuncionarioDTO getFuncionarioWithEstabelecimentoById (Integer id);
 	List<Funcionario> getFuncionarios();
 	boolean deleteFuncionario(int id);
 	boolean insertFuncionario(Funcionario f);

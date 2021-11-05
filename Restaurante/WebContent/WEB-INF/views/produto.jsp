@@ -56,7 +56,7 @@
 			<c:forEach var="c" items="${comandas}">
 				<c:forEach var="pe" items="${c.produtos}">
 					<tr>
-						<td>${c.id}</td>
+						<td>${c.estabelecimento.cnpj}</td>
 
 						<td>${pe.nome}</td>
 					</tr>

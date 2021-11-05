@@ -85,6 +85,6 @@
     </bean>
  
     <bean id="persistenceExceptionTranslationPostProcessor"
-        class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor"/>
+        class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor?useUnicode=yes&amp;characterEncoding=UTF-8"/>
 	
 </beans>

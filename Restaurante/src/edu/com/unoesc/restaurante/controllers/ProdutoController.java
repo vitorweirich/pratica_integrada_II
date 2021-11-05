@@ -62,7 +62,7 @@ public class ProdutoController {
 	@GetMapping()
 	public String cadastraTeste() {
 		Categoria c = new Categoria();
-		c.setDescricao("BBBBBB");
+		c.setDescricao("Téste");
 		categoriaDAOImpl.insertCategoria(c);
 		
 		// Insert Endereco 

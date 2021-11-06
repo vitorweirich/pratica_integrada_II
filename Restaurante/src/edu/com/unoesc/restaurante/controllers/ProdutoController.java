@@ -102,7 +102,7 @@ public class ProdutoController {
 		return ResponseEntity.status(200).body(funcionarios);
 	}
 	
-	@GetMapping()
+	@GetMapping("/cadastrRowsTabelas")
 	public String cadastraTeste() {
 		Categoria c = new Categoria();
 		c.setDescricao("Téste");
@@ -171,7 +171,7 @@ public class ProdutoController {
 
 	@GetMapping(value = "/produtos")
 	public String produtosList(Model m) {
-		ArrayList<Produto> produtos = new ArrayList<Produto>(produtoDAO.getProdutos());
+		ArrayList<Produto> produtos = new ArrayList<>(produtoDAO.getProdutos());
 
 		m.addAttribute("listProdutos", produtos);
 		m.addAttribute("produtoForm", new ProdutoAdicionarForm());
@@ -200,7 +200,7 @@ public class ProdutoController {
 
 	@RequestMapping(value = "/produto/{id}")
 	public String produto(@PathVariable int id, Model model, HttpSession session) {
-		model.addAttribute("listProdutos", new ArrayList<Produto>(produtoDAO.getProdutos()));
+		model.addAttribute("listProdutos", new ArrayList<>(produtoDAO.getProdutos()));
 
 		model.addAttribute("produto", produtoDAO.getProdutoById(id));
 

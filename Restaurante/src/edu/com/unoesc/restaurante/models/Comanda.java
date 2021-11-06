@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -37,12 +38,14 @@ public class Comanda {
 	private LocalDateTime dataCriacao;
 	@Column(name = "data_hora_finalizacao")
 	private LocalDateTime dataFinalizacao;
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_estabelecimento", referencedColumnName = "id")
 	private Estabelecimento estabelecimento;
 
-	@JsonBackReference()
-	@ManyToMany(mappedBy = "comandas", fetch = FetchType.EAGER)
+//	@JsonBackReference()
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "pedidos", joinColumns = { @JoinColumn(name = "id_comandas") }, inverseJoinColumns = {
+			@JoinColumn(name = "id_produtos") })
 	private List<Produto> produtos = new ArrayList<Produto>();
 
 	public Comanda() {

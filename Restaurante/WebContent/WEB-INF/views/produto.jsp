@@ -1,6 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-
+<%-- <%@ page language="java" contentType="text/html; charset=UTF-8" --%>
+<%-- 	pageEncoding="UTF-8"%> --%>
+<%@page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
@@ -56,7 +56,7 @@
 			<c:forEach var="c" items="${comandas}">
 				<c:forEach var="pe" items="${c.produtos}">
 					<tr>
-						<td>${c.id}</td>
+						<td>${c.estabelecimento.cnpj}</td>
 
 						<td>${pe.nome}</td>
 					</tr>

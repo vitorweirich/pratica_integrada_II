@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import edu.com.unoesc.restaurante.dto.FuncionarioDTO;
 import edu.com.unoesc.restaurante.models.Funcionario;
 
 @Repository
@@ -30,6 +31,20 @@ public class FuncionarioDAOImpl implements FuncionarioDAO {
 	@Transactional
 	public List<Funcionario> getFuncionarios() {
 		return (List<Funcionario>) this.sessionFactory.getCurrentSession().createQuery("from Funcionario").list();
+	}
+	
+	@Override
+	@Transactional
+	public FuncionarioDTO getFuncionarioWithEstabelecimentoById(Integer id) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Funcionario f = (Funcionario) session.get(Funcionario.class, id);
+		System.out.println(f.getNome());
+		System.out.println(f.getNome());
+		System.out.println(f.getNome());
+		System.out.println(f.getEstabelecimento().getCnpj());
+		System.out.println(f.getNome());
+		FuncionarioDTO funcionarioDTO = new FuncionarioDTO(f);
+		return funcionarioDTO;
 	}
 
 	@Override

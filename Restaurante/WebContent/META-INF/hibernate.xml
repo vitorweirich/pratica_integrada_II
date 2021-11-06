@@ -2,10 +2,15 @@
 <!DOCTYPE hibernate-configuration PUBLIC
     "-//Hibernate/Hibernate Configuration DTD//EN"
     "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
- 
+
 <hibernate-configuration>
-    <session-factory>
-        <mapping class="edu.com.unoesc.restaurante.models.Produto"></mapping>
-       
-    </session-factory>
+	<session-factory>
+		<mapping class="edu.com.unoesc.restaurante.models.Comanda"></mapping>
+		<mapping class="edu.com.unoesc.restaurante.models.Categoria"></mapping>
+		<mapping class="edu.com.unoesc.restaurante.models.Endereco"></mapping>
+		<mapping class="edu.com.unoesc.restaurante.models.Estabelecimento"></mapping>
+		<mapping class="edu.com.unoesc.restaurante.models.Funcionario"></mapping>
+		<mapping class="edu.com.unoesc.restaurante.models.Pedido"></mapping>
+		<mapping class="edu.com.unoesc.restaurante.models.Produto"></mapping>
+	</session-factory>
 </hibernate-configuration>

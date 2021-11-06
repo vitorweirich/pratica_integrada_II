@@ -14,16 +14,16 @@ public class Categoria {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	@Column
+	@Column(name = "descricao")
 	private String descricao;
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
+	public Categoria() {
+		this.id = -1;
+	}
+
+	public Categoria(Integer id, String descricao) {
+		this.id = id;
+		this.descricao = descricao;
 	}
 
 	public Integer getId() {
@@ -40,6 +40,15 @@ public class Categoria {
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((descricao == null) ? 0 : descricao.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
 	}
 
 	@Override

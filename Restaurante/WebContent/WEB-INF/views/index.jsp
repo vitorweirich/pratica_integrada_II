@@ -8,6 +8,8 @@
         <ul>
         	<li><a href="produtos"> Produtos</li>
         	<li><a href="categorias"> Categorias</li>
+        	<li><a href="estabelecimentos"> Estabelecimentos</li>
+        	<li><a href="enderecos"> Endercos</li>
         </ul>
   </body>
 </html>

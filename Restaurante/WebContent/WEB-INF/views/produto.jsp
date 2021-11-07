@@ -67,7 +67,7 @@
 
 	<div
 		style="position: relative; display: inline-block; width: 50%; margin-bottom: 40px; margin-left: 15%; border-collapse: collapse;">
-		<form action="/Restaurante_war/produtoSave" method="POST"
+		<form action="/Restaurante/produtoSave" method="POST"
 			modelAttribute="produtoForm">
 			<form:hidden path="produtoForm.id" />
 			<p>
@@ -78,5 +78,6 @@
 
 		</form>
 	</div>
+	<a href="/Restaurante/"> Voltar</a>
 </body>
 </html>

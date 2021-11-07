@@ -3,12 +3,13 @@ package edu.com.unoesc.restaurante.form;
 import edu.com.unoesc.restaurante.dao.CategoriaDAO;
 import edu.com.unoesc.restaurante.models.Categoria;
 
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
 public class CategoriaAdicionarForm {
     @NotNull
     private Integer id;
-    @NotNull
+    @NotBlank
     private String descricao;
 
     public CategoriaAdicionarForm() {
@@ -20,6 +21,7 @@ public class CategoriaAdicionarForm {
     }
 
     public void setId(Integer id) {
+    	System.out.println("Set id " + id);
         this.id = id;
     }
 

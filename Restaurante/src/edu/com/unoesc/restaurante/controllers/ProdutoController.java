@@ -72,13 +72,11 @@ public class ProdutoController {
 	@GetMapping("/estabelecimentosDTO")
 	public ResponseEntity<List<EstabelecimentoDTO>> getEstabelecimentosDTO() {
 		List<Estabelecimento> estabelecimentos = estabelecimentoDAOImpl.getEstabelecimentos();
-//		estabelecimentos.forEach(e -> e.getFuncionarios().forEach(f -> System.out.println(f.getNome())));
 		return ResponseEntity.status(200).body(EstabelecimentoDTO.converter(estabelecimentos));
 	}
-	@GetMapping("/estabelecimentos")
-	public ResponseEntity<List<Estabelecimento>> getEstabelecimentos() {
+	@GetMapping("/estabelecimentosAPI")
+	public ResponseEntity<List<Estabelecimento>> getEstabelecimentosAPI() {
 		List<Estabelecimento> estabelecimentos = estabelecimentoDAOImpl.getEstabelecimentos();
-//		estabelecimentos.forEach(e -> e.getFuncionarios().forEach(f -> System.out.println(f.getNome())));
 		return ResponseEntity.status(200).body(estabelecimentos);
 	}
 	
@@ -177,8 +175,6 @@ public class ProdutoController {
 		m.addAttribute("produtoForm", new ProdutoAdicionarForm());
 
 		m.addAttribute("estabelecimentos", estabelecimentoDAOImpl.getEstabelecimentos());
-		List<Comanda> comandas = comandaDAOImpl.getComandas();
-		comandas.forEach(c -> c.getProdutos().forEach(pe -> System.out.println(pe.getNome())));
 		m.addAttribute("comandas", comandaDAOImpl.getComandas());
 		return "produto";
 	}

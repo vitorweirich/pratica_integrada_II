@@ -23,6 +23,19 @@ public class Endereco {
 	@Column(name = "cep")
 	private String cep;
 
+	public Endereco() {
+
+	}
+
+	public Endereco(Integer id, String logradouro, String bairro, String cidade, String cep) {
+		super();
+		this.id = id;
+		this.logradouro = logradouro;
+		this.bairro = bairro;
+		this.cidade = cidade;
+		this.cep = cep;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;

@@ -26,7 +26,7 @@
 
     <div
             style="position: relative; display: inline-block; width: 50%; margin-bottom: 40px; margin-left: 15%; border-collapse: collapse;">
-        <form action="/Restaurante_war/categoriaSave" method="POST"
+        <form action="/Restaurante/categoriaSave" method="POST"
               modelAttribute="categoriaForm">
             <form:hidden path="categoriaForm.id" />
             <p>
@@ -37,7 +37,7 @@
 
         </form>
     </div>
-
+	<a href="/Restaurante/"> Voltar</a>
 
 </body>
 </html>

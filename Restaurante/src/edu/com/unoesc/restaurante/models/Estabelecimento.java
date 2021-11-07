@@ -37,6 +37,23 @@ public class Estabelecimento {
 	@JoinColumn(name = "id_endereco", referencedColumnName = "id")
 	private Endereco endereco;
 
+	public Estabelecimento() {
+		this.id = -1;
+	}
+	
+	public Estabelecimento(Integer id, String nome, String razaoSocial, String cnpj, String inscricaoEstadual,
+			String telefone, Endereco endereco) {
+		this.id = id;
+		this.nome = nome;
+		this.razaoSocial = razaoSocial;
+		this.cnpj = cnpj;
+		this.inscricaoEstadual = inscricaoEstadual;
+		this.telefone = telefone;
+		this.endereco = endereco;
+	}
+
+
+
 	@JsonIgnore
 	@OneToMany(mappedBy = "estabelecimento")
 	private List<Funcionario> funcionarios = new ArrayList<Funcionario>();

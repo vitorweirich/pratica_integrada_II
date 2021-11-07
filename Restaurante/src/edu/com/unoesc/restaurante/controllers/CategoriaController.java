@@ -54,7 +54,7 @@ public class CategoriaController {
     @RequestMapping(value = "/categoria/{id}")
     public String produto(@PathVariable int id, Model model, HttpSession session) {
 
-        model.addAttribute("listCategorias", new ArrayList<>(categoriaDAO.getCategorias()));
+        model.addAttribute("listCategorias", categoriaDAO.getCategorias());
         model.addAttribute("categoria", categoriaDAO.getCategoriaById(id));
 
         return "categoria";

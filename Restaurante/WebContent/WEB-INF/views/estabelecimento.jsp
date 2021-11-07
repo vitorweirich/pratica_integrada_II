@@ -43,7 +43,7 @@
 		style="position: relative; display: inline-block; width: 50%; margin-bottom: 40px; margin-left: 15%; border-collapse: collapse;">
 		<!--  Percebam que aqui no action eu to passando qual a página que elevai mandar os dados depois que eu clicar no botao -->
 		<form action="/Restaurante/estabelecimentoSave" method="POST" modelAttribute="estabelecimento">
-			<%-- <form:hidden path="estabelecimento.id" /> --%>
+			<form:hidden path="estabelecimento.id" />
 			<p>
 				Endereço:
 				<form:select path="estabelecimento.endereco">
@@ -52,10 +52,10 @@
                 </form:select>
 				
 			</p>
-			<p>
-				id:
-				<form:input path="estabelecimento.id" />
-			</p>
+<!-- 			<p> -->
+<!-- 				id: -->
+<%-- 				<form:input path="estabelecimento.id" /> --%>
+<!-- 			</p> -->
 			<p>
 				Nome:
 				<form:input path="estabelecimento.nome" />

@@ -82,20 +82,12 @@ public class ProdutoController {
 	
 	@GetMapping("/funcionario/{id}")
 	public ResponseEntity<FuncionarioDTO> getFuncionario(@PathVariable("id") Integer id) {
-		System.out.println(id);
-		System.out.println(id);
-		System.out.println(id);
-		System.out.println(id);
 		FuncionarioDTO f = funcionarioDAOImpl.getFuncionarioWithEstabelecimentoById(id);
 		return ResponseEntity.status(200).body(f);
 	}
 	
 	@GetMapping("/funcionarios")
 	public ResponseEntity<List<Funcionario>> getFuncionarios() {
-		System.out.println("sasaa");
-		System.out.println("sasaa");
-		System.out.println("sasaa");
-		System.out.println("sasaa");
 		List<Funcionario> funcionarios = funcionarioDAOImpl.getFuncionarios();
 		return ResponseEntity.status(200).body(funcionarios);
 	}
@@ -196,7 +188,7 @@ public class ProdutoController {
 
 	@RequestMapping(value = "/produto/{id}")
 	public String produto(@PathVariable int id, Model model, HttpSession session) {
-		model.addAttribute("listProdutos", new ArrayList<>(produtoDAO.getProdutos()));
+		model.addAttribute("listProdutos", produtoDAO.getProdutos());
 
 		model.addAttribute("produto", produtoDAO.getProdutoById(id));
 

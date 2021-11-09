@@ -117,14 +117,14 @@ public class ProdutoController {
 		estabelecimentoDAOImpl.insertEstabelecimento(est);
 		
 		// Insert Funcionario
-		Funcionario f = new Funcionario();
-		f.setNome("Parry Horrer");
-		f.setCpf("44112122");
-		f.setEndereco(end);
-		f.setFuncao("Migicionista");
-		f.setNascimento(LocalDate.now());
-		f.setEstabelecimento(est);
-		funcionarioDAOImpl.insertFuncionario(f);
+//		Funcionario f = new Funcionario();
+//		f.setNome("Parry Horrer");
+//		f.setCpf("44112122");
+//		f.setEndereco(end);
+//		f.setFuncao("Migicionista");
+//		f.setNascimento(LocalDate.now());
+//		f.setEstabelecimento(est);
+//		funcionarioDAOImpl.insertFuncionario(f);
 		
 		// Insert Produto
 		Produto produto = new Produto();

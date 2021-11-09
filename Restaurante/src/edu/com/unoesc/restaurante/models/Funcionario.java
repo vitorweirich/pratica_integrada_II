@@ -40,6 +40,20 @@ public class Funcionario {
 	@JoinColumn(name = "id_estabelecimento")
 	private Estabelecimento estabelecimento;
 
+	public Funcionario(Integer id, String nome, LocalDate nascimento, String cpf, String funcao, Endereco endereco, Estabelecimento estabelecimento) {
+		this.id = id;
+		this.nome = nome;
+		this.nascimento = nascimento;
+		this.cpf = cpf;
+		this.funcao = funcao;
+		this.endereco = endereco;
+		this.estabelecimento = estabelecimento;
+	}
+
+	public Funcionario() {
+
+	}
+
 	public Integer getId() {
 		return id;
 	}

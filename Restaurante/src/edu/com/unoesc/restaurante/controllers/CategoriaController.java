@@ -1,68 +1,66 @@
 package edu.com.unoesc.restaurante.controllers;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.List;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 
 import edu.com.unoesc.restaurante.dao.CategoriaDAO;
-import edu.com.unoesc.restaurante.form.CategoriaAdicionarForm;
 import edu.com.unoesc.restaurante.models.Categoria;
 
-@Controller
-public class CategoriaController {
+@ManagedBean(name = "categoriaMB")
+@RequestScoped
+public class CategoriaController implements Serializable {
 
-    @Autowired
-    private CategoriaDAO categoriaDAO;
+	private Categoria categoria = new Categoria();
+	private List<Categoria> listCategorias = null;
 
-    @GetMapping(value = "/categorias")
-    public String categoriasList(Model m) {
-        ArrayList<Categoria> categorias = new ArrayList<>(categoriaDAO.getCategorias());
+	@ManagedProperty(value = "#{CategoriaDAO}")
+	private CategoriaDAO categoriaDAO;
 
-        m.addAttribute("listCategorias", categorias);
-        m.addAttribute("categoriaForm", new CategoriaAdicionarForm());
+	public void save() {
 
-        return "categoria";
-    }
+		if (this.categoria.getId() == -1) {
+			this.categoriaDAO.insertCategoria(categoria);
+		} else {
+			this.categoriaDAO.updateCategoria(categoria);
+		}
+		this.listCategorias = null;
 
-    @PostMapping(value = "/categoriaSave")
-    public String save(@Valid @ModelAttribute("categoriaForm") CategoriaAdicionarForm categoriaForm, BindingResult result) {
-        if(result.hasErrors()) {
-            return "redirect:/categorias";
-        }
+		this.categoria = new Categoria();
 
-        Categoria categoria = categoriaForm.getCategoria(categoriaDAO);
-        if (categoria.getId() == -1) {
-            categoriaDAO.insertCategoria(categoria);
-        } else {
-            categoriaDAO.updateCategoria(categoria);
-        }
+	}
 
-        return "redirect:/categorias";
-    }
+	public void load(int id) {
+		categoria = categoriaDAO.getCategoriaById(id);
+	}
 
-    @RequestMapping(value = "/categoria/{id}")
-    public String produto(@PathVariable int id, Model model, HttpSession session) {
+	public Categoria getCategoria() {
+		return categoria;
+	}
 
-        model.addAttribute("listCategorias", categoriaDAO.getCategorias());
-        model.addAttribute("categoria", categoriaDAO.getCategoriaById(id));
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
 
-        return "categoria";
-    }
+	public List<Categoria> getListCategorias() {
+		if (this.listCategorias == null)
+			this.listCategorias = this.categoriaDAO.getCategorias();
 
-    @GetMapping(value = "/categoria/{id}/deletar")
-    public String deletar(@PathVariable int id, Model model, HttpSession session) {
-        categoriaDAO.deleteCategoria(id);
-        return "redirect:/categorias";
-    }
+		return this.listCategorias;
+	}
+
+	public void setListCategorias(List<Categoria> listCategorias) {
+		this.listCategorias = listCategorias;
+	}
+
+	public CategoriaDAO getCategoriaDAO() {
+		return categoriaDAO;
+	}
+
+	public void setCategoriaDAO(CategoriaDAO categoriaDAO) {
+		this.categoriaDAO = categoriaDAO;
+	}
 }

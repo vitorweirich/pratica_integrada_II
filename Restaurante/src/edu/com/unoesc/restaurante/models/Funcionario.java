@@ -37,7 +37,7 @@ public class Funcionario {
 	private Endereco endereco;
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "id_estabelecimento")
+	@JoinColumn(name = "id_estabelecimento", referencedColumnName = "id")
 	private Estabelecimento estabelecimento;
 
 	public Funcionario(Integer id, String nome, LocalDate nascimento, String cpf, String funcao, Endereco endereco, Estabelecimento estabelecimento) {

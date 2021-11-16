@@ -4,6 +4,8 @@ import edu.com.unoesc.restaurante.dao.EnderecoDAO;
 import edu.com.unoesc.restaurante.dao.EstabelecimentoDAO;
 import edu.com.unoesc.restaurante.dao.FuncionarioDAO;
 import edu.com.unoesc.restaurante.form.FuncionarioAdicionarForm;
+import edu.com.unoesc.restaurante.models.Endereco;
+import edu.com.unoesc.restaurante.models.Estabelecimento;
 import edu.com.unoesc.restaurante.models.Funcionario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,6 +30,11 @@ public class FuncionarioController {
     @GetMapping(value = "/funcionarios")
     public String funcionariosList(Model m) {
         ArrayList<Funcionario> funcionarios = new ArrayList<>(funcionarioDAO.getFuncionarios());
+        ArrayList<Endereco> enderecos = new ArrayList<>(enderecoDAO.getEnderecos());
+        ArrayList<Estabelecimento> estabelecimentos = new ArrayList<>(estabelecimentoDAO.getEstabelecimentos());
+
+        m.addAttribute("listEnderecos", enderecos);
+        m.addAttribute("listEstabelecimentos", estabelecimentos);
 
         m.addAttribute("listFuncionarios", funcionarios);
         m.addAttribute("funcionarioForm", new FuncionarioAdicionarForm());

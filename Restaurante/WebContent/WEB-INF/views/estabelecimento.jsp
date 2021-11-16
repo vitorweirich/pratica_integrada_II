@@ -42,42 +42,40 @@
 	<div
 		style="position: relative; display: inline-block; width: 50%; margin-bottom: 40px; margin-left: 15%; border-collapse: collapse;">
 		<!--  Percebam que aqui no action eu to passando qual a página que elevai mandar os dados depois que eu clicar no botao -->
-		<form action="/Restaurante/estabelecimentoSave" method="POST" modelAttribute="estabelecimento">
-			<form:hidden path="estabelecimento.id" />
+		<form action="/Restaurante/estabelecimentoSave" method="POST" modelAttribute="estabelecimentoForm">
+			<form:hidden path="estabelecimentoForm.id" />
 			<p>
 				Endereço:
-				<form:select path="estabelecimento.endereco">
+				<form:select path="estabelecimentoForm.endereco">
                     <form:option value="-1" label="--Selecione Endereco"/>
                     <form:options items="${listEnderecos}" itemValue="id" itemLabel="logradouro"/>
                 </form:select>
 				
 			</p>
-<!-- 			<p> -->
-<!-- 				id: -->
-<%-- 				<form:input path="estabelecimento.id" /> --%>
-<!-- 			</p> -->
+
 			<p>
 				Nome:
-				<form:input path="estabelecimento.nome" />
+				<form:input path="estabelecimentoForm.nome" />
 			</p>
+
 			<p>
 				Razao Social:
-				<form:input path="estabelecimento.razaoSocial" />
+				<form:input path="estabelecimentoForm.razaoSocial" />
 			</p>
 			
 			<p>
 				CNPJ:
-				<form:input path="estabelecimento.cnpj" />
+				<form:input path="estabelecimentoForm.cnpj" />
 			</p>
+
 			<p>
 				Inscricao Estadual:
-				<form:input path="estabelecimento.inscricaoEstadual" />
+				<form:input path="estabelecimentoForm.inscricaoEstadual" />
 			</p>
 			
 			<p>
 				Telefone:
-				<form:input path="estabelecimento.telefone" />
-			</p>
+				<form:input path="estabelecimentoForm.telefone" />
 			</p>
 
 			<input type="submit" value="Salvar" />

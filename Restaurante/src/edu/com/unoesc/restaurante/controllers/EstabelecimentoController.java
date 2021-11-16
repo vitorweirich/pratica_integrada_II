@@ -39,7 +39,7 @@ public class EstabelecimentoController {
 
 		m.addAttribute("listEnderecos", enderecos);
 		m.addAttribute("listEstabelecimentos", estabelecimentos);
-		m.addAttribute("estabelecimento", new EstabelecimentoAdicionarForm());
+		m.addAttribute("estabelecimentoForm", new EstabelecimentoAdicionarForm());
 		
 		System.out.println(estabelecimentos.size());
 		

@@ -1,9 +1,11 @@
 package edu.com.unoesc.restaurante.controllers;
 
+import edu.com.unoesc.restaurante.dao.CategoriaDAO;
 import edu.com.unoesc.restaurante.dao.EnderecoDAO;
 import edu.com.unoesc.restaurante.dao.EstabelecimentoDAO;
 import edu.com.unoesc.restaurante.dao.FuncionarioDAO;
 import edu.com.unoesc.restaurante.form.FuncionarioAdicionarForm;
+import edu.com.unoesc.restaurante.models.Categoria;
 import edu.com.unoesc.restaurante.models.Endereco;
 import edu.com.unoesc.restaurante.models.Estabelecimento;
 import edu.com.unoesc.restaurante.models.Funcionario;
@@ -13,63 +15,68 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
-@Controller
+@ManagedBean(name = "funcionarioMB")
+@RequestScoped
 public class FuncionarioController {
 
-    @Autowired
-    private FuncionarioDAO funcionarioDAO;
-    @Autowired
-    private EnderecoDAO enderecoDAO;
-    @Autowired
-    private EstabelecimentoDAO estabelecimentoDAO;
+	private Funcionario funcionario = new Funcionario();
+	private List<Funcionario> listFuncionarios = null;
 
-    @GetMapping(value = "/funcionarios")
-    public String funcionariosList(Model m) {
-        ArrayList<Funcionario> funcionarios = new ArrayList<>(funcionarioDAO.getFuncionarios());
-        ArrayList<Endereco> enderecos = new ArrayList<>(enderecoDAO.getEnderecos());
-        ArrayList<Estabelecimento> estabelecimentos = new ArrayList<>(estabelecimentoDAO.getEstabelecimentos());
+	@ManagedProperty(value = "#{FuncionarioDAO}")
+	private FuncionarioDAO funcionarioDAO;
 
-        m.addAttribute("listEnderecos", enderecos);
-        m.addAttribute("listEstabelecimentos", estabelecimentos);
+	public void save() {
 
-        m.addAttribute("listFuncionarios", funcionarios);
-        m.addAttribute("funcionarioForm", new FuncionarioAdicionarForm());
+		if (this.funcionario.getId() == -1) {
+			this.funcionarioDAO.insertFuncionario(funcionario);
+		} else {
+			this.funcionarioDAO.updateFuncionario(funcionario);
+		}
+		this.listFuncionarios = null;
 
-        return "funcionario";
-    }
+		this.funcionario = new Funcionario();
 
-    @PostMapping(value = "/funcionarioSave")
-    public String save(@Valid @ModelAttribute("funcionarioForm") FuncionarioAdicionarForm funcionarioForm, BindingResult result) {
-        if(result.hasErrors()) {
-            return "redirect:/funcionarios";
-        }
+	}
+	
+	public void load(int id) {
+		funcionario = funcionarioDAO.getFuncionarioById(id);
+	}
 
-        Funcionario funcionario = funcionarioForm.getFuncionario(enderecoDAO, estabelecimentoDAO);
-        if (funcionario.getId() == -1) {
-            funcionarioDAO.insertFuncionario(funcionario);
-        } else {
-            funcionarioDAO.updateFuncionario(funcionario);
-        }
+	public Funcionario getFuncionario() {
+		return funcionario;
+	}
 
-        return "redirect:/funcionarios";
-    }
+	public void setFuncionario(Funcionario funcionario) {
+		this.funcionario = funcionario;
+	}
 
-    @RequestMapping(value = "/funcionario/{id}")
-    public String funcionarioEditar(@PathVariable int id, Model model, HttpSession session) {
+	public List<Funcionario> getListFuncionarios() {
+		if (this.listFuncionarios == null)
+			this.listFuncionarios = this.funcionarioDAO.getFuncionarios();
 
-        model.addAttribute("listFuncionarios", funcionarioDAO.getFuncionarios());
-        model.addAttribute("funcionario", funcionarioDAO.getFuncionarioById(id));
+		return this.listFuncionarios;
+	}
 
-        return "funcionario";
-    }
+	public void setListFuncionarios(List<Funcionario> listFuncionarios) {
+		this.listFuncionarios = listFuncionarios;
+	}
 
-    @GetMapping(value = "/funcionario/{id}/deletar")
-    public String funcionarioDeletar(@PathVariable int id, Model model, HttpSession session) {
-        funcionarioDAO.deleteFuncionario(id);
-        return "redirect:/funcionarios";
-    }
+	public FuncionarioDAO getFuncionarioDAO() {
+		return funcionarioDAO;
+	}
+
+	public void setFuncionarioDAO(FuncionarioDAO funcionarioDAO) {
+		this.funcionarioDAO = funcionarioDAO;
+	}
+	
+	
+	
 }

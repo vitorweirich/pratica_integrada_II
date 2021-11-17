@@ -1,6 +1,8 @@
 package edu.com.unoesc.restaurante.models;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -13,6 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,6 +31,7 @@ public class Funcionario {
 	@Column(name = "nome")
 	private String nome;
 	@Column(name = "data_nasc")
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate nascimento;
 	@Column(name = "cpf")
 	private String cpf;
@@ -51,8 +56,8 @@ public class Funcionario {
 	}
 
 	public Funcionario() {
-
-	}
+		this.id = -1;
+	}	
 
 	public Integer getId() {
 		return id;
@@ -74,8 +79,9 @@ public class Funcionario {
 		return nascimento;
 	}
 
-	public void setNascimento(LocalDate nascimento) {
-		this.nascimento = nascimento;
+	public void setNascimento(Date nascimento) {
+		LocalDate gambi = LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(nascimento) );
+		this.nascimento = gambi;
 	}
 
 	public String getCpf() {

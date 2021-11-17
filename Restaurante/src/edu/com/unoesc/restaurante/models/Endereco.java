@@ -22,9 +22,9 @@ public class Endereco {
 	private String cidade;
 	@Column(name = "cep")
 	private String cep;
-
+	
 	public Endereco() {
-
+		this.id = -1;
 	}
 
 	public Endereco(Integer id, String logradouro, String bairro, String cidade, String cep) {

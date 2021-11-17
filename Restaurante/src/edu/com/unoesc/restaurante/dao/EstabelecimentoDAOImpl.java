@@ -7,12 +7,13 @@ import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.com.unoesc.restaurante.models.Estabelecimento;
 import edu.com.unoesc.restaurante.models.Funcionario;
 
-@Repository
+@Service(value="EstabelecimentoDAO")
 public class EstabelecimentoDAOImpl implements EstabelecimentoDAO {
 
 	@Autowired

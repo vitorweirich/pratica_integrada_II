@@ -2,6 +2,7 @@ package edu.com.unoesc.restaurante.models;
 
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -32,7 +33,7 @@ public class Funcionario {
 	private String nome;
 	@Column(name = "data_nasc")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private LocalDate nascimento;
+	private Date nascimento;
 	@Column(name = "cpf")
 	private String cpf;
 	@Column(name = "funcao")
@@ -45,7 +46,7 @@ public class Funcionario {
 	@JoinColumn(name = "id_estabelecimento", referencedColumnName = "id")
 	private Estabelecimento estabelecimento;
 
-	public Funcionario(Integer id, String nome, LocalDate nascimento, String cpf, String funcao, Endereco endereco, Estabelecimento estabelecimento) {
+	public Funcionario(Integer id, String nome, Date nascimento, String cpf, String funcao, Endereco endereco, Estabelecimento estabelecimento) {
 		this.id = id;
 		this.nome = nome;
 		this.nascimento = nascimento;
@@ -75,13 +76,12 @@ public class Funcionario {
 		this.nome = nome;
 	}
 
-	public LocalDate getNascimento() {
+	public Date getNascimento() {
 		return nascimento;
 	}
 
 	public void setNascimento(Date nascimento) {
-		LocalDate gambi = LocalDate.parse( new SimpleDateFormat("yyyy-MM-dd").format(nascimento) );
-		this.nascimento = gambi;
+		this.nascimento = nascimento;
 	}
 
 	public String getCpf() {

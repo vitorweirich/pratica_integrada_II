@@ -10,6 +10,8 @@ import edu.com.unoesc.restaurante.models.Funcionario;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
 
 public class FuncionarioAdicionarForm {
 
@@ -18,7 +20,7 @@ public class FuncionarioAdicionarForm {
     @NotBlank
     private String nome;
     @NotNull
-    private LocalDate nascimento;
+    private Date nascimento;
     @NotBlank
     private String cpf;
     @NotBlank
@@ -58,11 +60,11 @@ public class FuncionarioAdicionarForm {
         this.nome = nome;
     }
 
-    public LocalDate getNascimento() {
+    public Date getNascimento() {
         return nascimento;
     }
 
-    public void setNascimento(LocalDate nascimento) {
+    public void setNascimento(Date nascimento) {
         this.nascimento = nascimento;
     }
 

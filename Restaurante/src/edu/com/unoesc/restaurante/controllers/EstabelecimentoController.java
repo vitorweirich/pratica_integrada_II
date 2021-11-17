@@ -1,30 +1,13 @@
 package edu.com.unoesc.restaurante.controllers;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import edu.com.unoesc.restaurante.dao.CategoriaDAO;
-import edu.com.unoesc.restaurante.dao.EnderecoDAO;
 import edu.com.unoesc.restaurante.dao.EstabelecimentoDAO;
-import edu.com.unoesc.restaurante.form.EstabelecimentoAdicionarForm;
-import edu.com.unoesc.restaurante.models.Categoria;
-import edu.com.unoesc.restaurante.models.Endereco;
 import edu.com.unoesc.restaurante.models.Estabelecimento;
 
 

@@ -1,27 +1,13 @@
 package edu.com.unoesc.restaurante.controllers;
 
-import edu.com.unoesc.restaurante.dao.CategoriaDAO;
-import edu.com.unoesc.restaurante.dao.EnderecoDAO;
-import edu.com.unoesc.restaurante.dao.EstabelecimentoDAO;
-import edu.com.unoesc.restaurante.dao.FuncionarioDAO;
-import edu.com.unoesc.restaurante.form.FuncionarioAdicionarForm;
-import edu.com.unoesc.restaurante.models.Categoria;
-import edu.com.unoesc.restaurante.models.Endereco;
-import edu.com.unoesc.restaurante.models.Estabelecimento;
-import edu.com.unoesc.restaurante.models.Funcionario;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
+
+import edu.com.unoesc.restaurante.dao.FuncionarioDAO;
+import edu.com.unoesc.restaurante.models.Funcionario;
 
 @ManagedBean(name = "funcionarioMB")
 @RequestScoped

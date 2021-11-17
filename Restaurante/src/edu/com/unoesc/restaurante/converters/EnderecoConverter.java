@@ -5,11 +5,6 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import org.springframework.stereotype.Component;
-
-import edu.com.unoesc.restaurante.dao.EnderecoDAO;
 import edu.com.unoesc.restaurante.models.Endereco;
 
 @FacesConverter(value = "EnderecoConverter", forClass = Endereco.class)

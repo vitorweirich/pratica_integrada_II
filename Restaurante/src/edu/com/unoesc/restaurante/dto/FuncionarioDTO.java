@@ -1,6 +1,5 @@
 package edu.com.unoesc.restaurante.dto;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 import edu.com.unoesc.restaurante.models.Endereco;

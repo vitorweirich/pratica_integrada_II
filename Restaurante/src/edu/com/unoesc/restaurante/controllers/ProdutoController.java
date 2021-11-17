@@ -1,10 +1,14 @@
 package edu.com.unoesc.restaurante.controllers;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -37,169 +41,60 @@ import edu.com.unoesc.restaurante.models.Funcionario;
 import edu.com.unoesc.restaurante.models.Pedido;
 import edu.com.unoesc.restaurante.models.Produto;
 
-@Controller
-@RequestMapping("/")
-public class ProdutoController {
+@ManagedBean(name = "produtoMB")
+@RequestScoped
+public class ProdutoController implements Serializable {
 
-	@Autowired
-	private CategoriaDAO categoriaDAOImpl;
-
-	@Autowired
-	private ComandaDAO comandaDAOImpl;
+	private Produto produto = new Produto();
+	private List<Produto> listProdutos = null;
 	
-	@Autowired
-	private EnderecoDAO enderecoDAOImpl;
-
-	@Autowired
-	private EstabelecimentoDAO estabelecimentoDAOImpl;
-	
-	@Autowired
-	private FuncionarioDAO funcionarioDAOImpl;
-	
-	@Autowired
-	private PedidoDAO pedidoDAOImpl;
-	
-	@Autowired
+	@ManagedProperty(value = "#{ProdutoDAO}")
 	private ProdutoDAO produtoDAO;
 	
-	@GetMapping("/comandas")
-	public ResponseEntity<List<Comanda>> getComandas() {
-		List<Comanda> comandas = comandaDAOImpl.getComandas();
-		comandas.forEach(c -> c.getProdutos().forEach(p -> System.out.println(p.getNome())));
-		return ResponseEntity.status(200).body(comandas);
-	}
+	public void save() {
 
-	@GetMapping("/estabelecimentosDTO")
-	public ResponseEntity<List<EstabelecimentoDTO>> getEstabelecimentosDTO() {
-		List<Estabelecimento> estabelecimentos = estabelecimentoDAOImpl.getEstabelecimentos();
-		return ResponseEntity.status(200).body(EstabelecimentoDTO.converter(estabelecimentos));
-	}
-	@GetMapping("/estabelecimentosAPI")
-	public ResponseEntity<List<Estabelecimento>> getEstabelecimentosAPI() {
-		List<Estabelecimento> estabelecimentos = estabelecimentoDAOImpl.getEstabelecimentos();
-		return ResponseEntity.status(200).body(estabelecimentos);
-	}
-
-	@GetMapping("/funcionario/{id}")
-	public ResponseEntity<FuncionarioDTO> getFuncionario(@PathVariable("id") Integer id) {
-		FuncionarioDTO f = funcionarioDAOImpl.getFuncionarioWithEstabelecimentoById(id);
-		return ResponseEntity.status(200).body(f);
-	}
-
-	@GetMapping("/funcionarios")
-	public ResponseEntity<List<Funcionario>> getFuncionarios() {
-		List<Funcionario> funcionarios = funcionarioDAOImpl.getFuncionarios();
-		return ResponseEntity.status(200).body(funcionarios);
-	}
-
-	@GetMapping("/cadastrRowsTabelas")
-	public String cadastraTeste() {
-		Categoria c = new Categoria();
-		c.setDescricao("Téste");
-		categoriaDAOImpl.insertCategoria(c);
-
-		// Insert Endereco
-		Endereco end = new Endereco();
-		end.setBairro("Comércio");
-		end.setCep("45330145");
-		end.setCidade("Pachecó");
-		end.setLogradouro("12, Avenida");
-		enderecoDAOImpl.insertEndereco(end);
-
-		// Insert Estabelecimento
-		Estabelecimento est = new Estabelecimento();
-		est.setCnpj("111111");
-		est.setEndereco(end);
-		est.setTelefone("89770000");
-		est.setInscricaoEstadual("Naum sei");
-		est.setNome("Frangaria");
-		est.setRazaoSocial("também não sei");
-		estabelecimentoDAOImpl.insertEstabelecimento(est);
-
-		// Insert Funcionario
-		Funcionario f = new Funcionario();
-		f.setNome("Parry Horrer");
-		f.setCpf("44112122");
-		f.setEndereco(end);
-		f.setFuncao("Migicionista");
-		f.setNascimento(LocalDate.now());
-		f.setEstabelecimento(est);
-		funcionarioDAOImpl.insertFuncionario(f);
-
-		// Insert Produto
-		Produto produto = new Produto();
-		produto.setCozido(false);
-		produto.setNome("AA");
-		produto.setPreco(15.5);
-		produto.setQuantidade(23);
-		produto.setUnidadeMedida("Grema");
-		produto.setCategoria(c);
-		produto.setEstabelecimento(est);
-		produtoDAO.insertProduto(produto);
-		Produto produtoById = produtoDAO.getProdutoById(produto.getId());
-		System.out.println();
-		System.out.println(produtoById.getNome());
-		System.out.println(produtoById.getEstabelecimento().getNome());
-		System.out.println(produtoById.getEstabelecimento().getEndereco().getCidade());
-		System.out.println();
-
-		// Insert Comanda
-		Comanda co = new Comanda();
-		co.setDataCriacao(LocalDateTime.now());
-		co.setEstabelecimento(est);
-		comandaDAOImpl.insertComanda(co);
-
-		// Insert Pedido
-		Pedido p = new Pedido();
-		p.setComanda(co);
-		p.setDataCriacao(LocalDateTime.now());
-		p.setQuantidade(1);
-		p.setProduto(produto);
-		pedidoDAOImpl.insertPedido(p);
-		return "redirect:/produtos";
-	}
-
-	@GetMapping(value = "/produtos")
-	public String produtosList(Model m) {
-		ArrayList<Produto> produtos = new ArrayList<>(produtoDAO.getProdutos());
-
-		m.addAttribute("listProdutos", produtos);
-		m.addAttribute("produtoForm", new ProdutoAdicionarForm());
-
-		m.addAttribute("estabelecimentos", estabelecimentoDAOImpl.getEstabelecimentos());
-		m.addAttribute("comandas", comandaDAOImpl.getComandas());
-		return "produto";
-	}
-
-	@PostMapping(value = "/produtoSave")
-	public String save(@Valid @ModelAttribute("produtoForm") ProdutoAdicionarForm produtoForm, BindingResult result) {
-		if(result.hasErrors()) {
-			return "redirect:/produtos";
-		}
-		Produto produto = produtoForm.getProduto(categoriaDAOImpl, estabelecimentoDAOImpl);
-		if (produto.getId() == -1) {
-			produtoDAO.insertProduto(produto);
+		if (this.produto.getId() == -1) {
+			this.produtoDAO.insertProduto(produto);
 		} else {
-			produtoDAO.updateProduto(produto);
+			this.produtoDAO.updateProduto(produto);
 		}
+		this.listProdutos = null;
 
-		return "redirect:/produtos";
-	}
-
-	@RequestMapping(value = "/produto/{id}")
-	public String produto(@PathVariable int id, Model model, HttpSession session) {
-		model.addAttribute("listProdutos", produtoDAO.getProdutos());
-
-		model.addAttribute("produto", produtoDAO.getProdutoById(id));
-
-		return "produto";
+		this.produto = new Produto();
 
 	}
 
-	@GetMapping(value = "/produto/{id}/deletar")
-	public String deletar(@PathVariable int id, Model model, HttpSession session) {
-		produtoDAO.deleteProduto(id);
-		return "redirect:/produtos";
+	public void load(int id) {
+		produto = produtoDAO.getProdutoById(id);
 	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public List<Produto> getListProdutos() {
+		if (this.listProdutos == null)
+			this.listProdutos = this.produtoDAO.getProdutos();
+
+		return this.listProdutos;
+	}
+
+	public void setListProdutos(List<Produto> listProdutos) {
+		this.listProdutos = listProdutos;
+	}
+
+	public ProdutoDAO getProdutoDAO() {
+		return produtoDAO;
+	}
+
+	public void setProdutoDAO(ProdutoDAO produtoDAO) {
+		this.produtoDAO = produtoDAO;
+	}
+	
+	
 
 }

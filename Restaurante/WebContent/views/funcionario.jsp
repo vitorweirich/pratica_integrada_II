@@ -42,7 +42,7 @@
 <div
         style="position: relative; display: inline-block; width: 50%; margin-bottom: 40px; margin-left: 15%; border-collapse: collapse;">
     <!--  Percebam que aqui no action eu to passando qual a página que elevai mandar os dados depois que eu clicar no botao -->
-    <form action="/Restaurante_war/funcionarioSave" method="POST" modelAttribute="funcionarioForm">
+    <form action="/Restaurante/funcionarioSave" method="POST" modelAttribute="funcionarioForm">
         <form:hidden path="funcionarioForm.id" />
 
         <p>

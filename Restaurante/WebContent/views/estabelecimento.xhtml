@@ -70,7 +70,7 @@
 				<p:outputLabel for="@next" value="Endereco:" />
 				<p:selectOneMenu id="conta" value="#{estabelecimentoMB.estabelecimento.endereco}"  converter="EnderecoConverter"
 					style="width:125px">
-					<f:selectItems value="#{enderecoMB.listEnderecos}" var="c" itemLabel="#{c.logradouro}" itemValue="#{c}"/>
+					<f:selectItems value="#{enderecoMB.listEnderecos}" var="e" itemLabel="#{e.logradouro}" itemValue="#{e}"/>
 				</p:selectOneMenu>
 
 				<h:outputText value="Nome: " />

@@ -7,6 +7,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.RequestScoped;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @ManagedBean(name = "comandaMB")
@@ -22,6 +23,7 @@ public class ComandaController implements Serializable {
     public void save() {
 
         if (this.comanda.getId() == -1) {
+            this.comanda.setDataCriacao(LocalDateTime.now());
             this.comandaDAO.insertComanda(comanda);
         } else {
             this.comandaDAO.updateComanda(comanda);

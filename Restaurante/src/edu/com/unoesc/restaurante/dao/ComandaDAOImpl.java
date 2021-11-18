@@ -6,11 +6,12 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.com.unoesc.restaurante.models.Comanda;
 
-@Repository
+@Service(value="ComandaDAO")
 public class ComandaDAOImpl implements ComandaDAO {
 
 	@Autowired

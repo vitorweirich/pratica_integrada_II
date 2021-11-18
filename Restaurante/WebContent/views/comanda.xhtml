@@ -3,6 +3,8 @@
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
@@ -55,44 +57,28 @@
     </p:dataTable>
   </p:panel>
 
-  <p:panel id="panelCad" header="Cadastro"
-           style="margin: 20px auto; width:40%;">
+  <p:panel id="panelCad" header="Cadastro" style="margin: 20px auto; width:40%;">
     <h:form>
       <h:inputHidden value="#{comandaMB.comanda.id}" />
 
       <p:growl id="growl" sticky="false" showDetail="false" />
       <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
-        <h:outputText value="Estabelecimento: " />
-        <p:multiSelectListbox value="#{estabelecimentoMB.listEstabelecimentos}" required="true"
-                     label="Nome" />
+        <p:outputLabel for="@next" value="Estabelecimento:" />
+        <p:selectOneMenu id="id_est" value="#{comandaMB.comanda.estabelecimento}"  converter="EstabelecimentoConverter"
+                         style="width:125px">
+          <f:selectItems value="#{estabelecimentoMB.listEstabelecimentos}" var="d" itemLabel="#{d.nome}" itemValue="#{d}"/>
+        </p:selectOneMenu>
+
         <h:outputText value="Mesa: " />
-        <p:inputText value="#{comandaMB.comanda.mesa}" required="true"
-                     label="Nome" />
-        <h:outputText value="Data Criação: " />
-        <p:inputText value="#{comandaMB.comanda.dataCriacao}" required="true"
-                     label="Nome" />
-        <h:outputText value="Data Finalização: " />
-        <p:inputText value="#{comandaMB.comanda.dataFinalizacao}" required="true"
-                     label="Nome" />
-        <h:outputText value="Desconto: " />
-        <p:inputText value="#{comandaMB.comanda.desconto}" required="true"
-                     label="Nome" />
-        <h:outputText value="Valor Pago: " />
-        <p:inputText value="#{comandaMB.comanda.valorPago}" required="true"
-                     label="Nome" />
-        <h:outputText value="Valor Total: " />
-        <p:inputText value="#{comandaMB.comanda.valorTotal}" required="true"
-                     label="Nome" />
+        <p:inputText value="#{comandaMB.comanda.mesa}" />
 
-        <p:commandButton value="Salvar" icon="ui-icon-disk"
-                         update="panel panelCad" action="#{categoriaMB.save}"
-                         style="margin-right:20px;" />
-
-<!--        comandaMB.listComandas.get(comandaMB.listComandas.size - 1).id + 1 -->
+        <p:commandButton value="Salvar" icon="ui-icon-disk" update="panel panelCad"
+                         action="#{comandaMB.save}" style="margin-right:20px;" />
 
       </h:panelGrid>
     </h:form>
   </p:panel>
+
 </h:body>
 </html>

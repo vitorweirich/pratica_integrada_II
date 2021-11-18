@@ -1,7 +1,6 @@
 package edu.com.unoesc.restaurante.controllers;
 
 import edu.com.unoesc.restaurante.dao.ComandaDAO;
-import edu.com.unoesc.restaurante.dao.EstabelecimentoDAO;
 import edu.com.unoesc.restaurante.models.Comanda;
 
 import javax.faces.bean.ManagedBean;
@@ -20,15 +19,12 @@ public class ComandaController implements Serializable {
     @ManagedProperty(value = "#{ComandaDAO}")
     private ComandaDAO comandaDAO;
 
-    @ManagedProperty(value = "#{EstabelecimentoDAO}")
-    private EstabelecimentoDAO estabelecimentoDAO;
-
     public void save() {
 
-        if (comanda.getId() == -1) {
-            comandaDAO.insertComanda(comanda);
+        if (this.comanda.getId() == -1) {
+            this.comandaDAO.insertComanda(comanda);
         } else {
-            comandaDAO.updateComanda(comanda);
+            this.comandaDAO.updateComanda(comanda);
         }
         this.listComandas = null;
 
@@ -60,7 +56,7 @@ public class ComandaController implements Serializable {
     }
 
     public ComandaDAO getComandaDAO() {
-        return comandaDAO;
+        return this.comandaDAO;
     }
 
     public void setComandaDAO(ComandaDAO comandaDAO) {

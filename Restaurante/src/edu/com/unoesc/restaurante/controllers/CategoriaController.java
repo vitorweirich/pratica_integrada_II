@@ -57,7 +57,7 @@ public class CategoriaController implements Serializable {
 	}
 
 	public CategoriaDAO getCategoriaDAO() {
-		return categoriaDAO;
+		return this.categoriaDAO;
 	}
 
 	public void setCategoriaDAO(CategoriaDAO categoriaDAO) {

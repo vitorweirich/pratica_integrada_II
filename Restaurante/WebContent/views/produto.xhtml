@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<p:breadCrumb>
+		<p:menuitem value="Categories" url="index.xhtml" />
+		<p:menuitem value="Produtos" url="#" />
+	</p:breadCrumb>
+</h:head>
+
+<h:body>
+
+	<p:panel style="width:70%; margin: 20px auto;" id="panel">
+		<p:dataTable var="c" value="#{produtoMB.listProdutos}" scrollable="true"
+			scrollHeight="200">
+
+			<p:column headerText="*">
+				<h:outputText value="#{c.id}" />
+			</p:column>
+
+			<p:column headerText="Nome">
+				<h:outputText value="#{c.nome}" />
+			</p:column>
+			
+			<p:column headerText="Preço">
+				<h:outputText value="#{c.preco}" />
+			</p:column>
+
+			<p:column headerText="Quantidade">
+				<h:outputText value="#{c.quantidade}" />
+			</p:column>
+			
+			<p:column headerText="Unidade de Medida">
+				<h:outputText value="#{c.unidadeMedida}" />
+			</p:column>
+			
+			<p:column headerText="Cozido?">
+				<h:outputText value="#{c.cozido}" />
+			</p:column>
+			
+			<p:column headerText="ID Estabelecimento">
+				<h:outputText value="#{c.estabelecimento.id}" />
+			</p:column>
+			
+			<p:column headerText="ID Categoria">
+				<h:outputText value="#{c.categoria.id}" />
+			</p:column>
+			
+
+			<p:column width="80">
+				<h:form>
+
+					<p:commandButton icon="ui-icon-pencil"
+						action="#{produtoMB.load(c.id)}" update="panelCad" />
+				</h:form>
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+
+	<p:panel id="panelCad" header="Cadastro" style="margin: 20px auto; width:40%;">
+		<h:form>
+			<h:inputHidden value="#{produtoMB.produto.id}" />
+
+			<p:growl id="growl" sticky="false" showDetail="false" />
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+				
+				<p:outputLabel for="@next" value="Estabelecimento:" />
+				<p:selectOneMenu id="id_est" value="#{produtoMB.produto.estabelecimento}"  converter="EstabelecimentoConverter"
+					style="width:125px">
+					<f:selectItems value="#{estabelecimentoMB.listEstabelecimentos}" var="d" itemLabel="#{d.nome}" itemValue="#{d}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel for="@next" value="Categoria:" />
+				<p:selectOneMenu id="id_cat" value="#{produtoMB.produto.categoria}"  converter="CategoriaConverter"
+					style="width:125px">
+					<f:selectItems value="#{categoriaMB.listCategorias}" var="e" itemLabel="#{e.descricao}" itemValue="#{e}"/>
+				</p:selectOneMenu>
+
+				<h:outputText value="Nome: " />
+				<p:inputText value="#{produtoMB.produto.nome}" />
+				
+				<h:outputText value="Preco: " />
+				<p:inputText value="#{produtoMB.produto.preco}" />
+				
+				<h:outputText value="Quantidade: " />
+				<p:inputText value="#{produtoMB.produto.quantidade}" />
+				
+				<h:outputText value="Unidade de Medida: " />
+				<p:inputText value="#{produtoMB.produto.unidadeMedida}" />
+				
+				<h:outputText value="Cozido: " />
+				<p:selectOneRadio id="console" value="#{produtoMB.produto.cozido}" unselectable="true">
+           		 <f:selectItem itemLabel="Sim" itemValue="1"/>
+            	 <f:selectItem itemLabel="Não" itemValue="0"/>
+     			</p:selectOneRadio>
+				
+				<p:commandButton value="Salvar" icon="ui-icon-disk" update="panel panelCad"
+					action="#{produtoMB.save}" style="margin-right:20px;" />
+
+			</h:panelGrid>
+		</h:form>
+	</p:panel>
+
+</h:body>
+</html>

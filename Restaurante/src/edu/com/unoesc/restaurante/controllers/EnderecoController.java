@@ -1,68 +1,69 @@
 package edu.com.unoesc.restaurante.controllers;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.List;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 
 import edu.com.unoesc.restaurante.dao.EnderecoDAO;
-import edu.com.unoesc.restaurante.form.EnderecoAdicionarForm;
 import edu.com.unoesc.restaurante.models.Endereco;
 
-@Controller
-public class EnderecoController {
+@ManagedBean(name = "enderecoMB")
+@RequestScoped
+public class EnderecoController implements Serializable {
 
-    @Autowired
-    private EnderecoDAO enderecoDAO;
+	private Endereco endereco = new Endereco();
+	private List<Endereco> listEnderecos = null;
+	
+	@ManagedProperty(value = "#{EnderecoDAO}")
+	private EnderecoDAO enderecoDAO;
 
-    @GetMapping(value = "/enderecos")
-    public String categoriasList(Model m) {
-        ArrayList<Endereco> categorias = new ArrayList<>(enderecoDAO.getEnderecos());
+	public void save() {
 
-        m.addAttribute("listEnderecos", categorias);
-        m.addAttribute("enderecoForm", new EnderecoAdicionarForm());
+		if (this.endereco.getId() == -1) {
+			this.enderecoDAO.insertEndereco(endereco);
+		} else {
+			this.enderecoDAO.updateEndereco(endereco);
+		}
+		this.listEnderecos = null;
 
-        return "endereco";
-    }
+		this.endereco = new Endereco();
 
-    @PostMapping(value = "/enderecoSave")
-    public String save(@Valid @ModelAttribute("enderecoForm") EnderecoAdicionarForm enderecoForm, BindingResult result) {
-        if(result.hasErrors()) {
-            return "redirect:/enderecos";
-        }
+	}
 
-        Endereco endereco = enderecoForm.getEndereco();
-        if (endereco.getId() == -1) {
-        	enderecoDAO.insertEndereco(endereco);
-        } else {
-        	enderecoDAO.updateEndereco(endereco);
-        }
+	public void load(int id) {
+		endereco = enderecoDAO.getEnderecoById(id);
+	}
 
-        return "redirect:/enderecos";
-    }
+	public Endereco getEndereco() {
+		return endereco;
+	}
 
-    @RequestMapping(value = "/endereco/{id}")
-    public String produto(@PathVariable int id, Model model, HttpSession session) {
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
 
-        model.addAttribute("listEnderecos", new ArrayList<>(enderecoDAO.getEnderecos()));
-        model.addAttribute("endereco", enderecoDAO.getEnderecoById(id));
+	public List<Endereco> getListEnderecos() {
+		if (this.listEnderecos == null)
+			this.listEnderecos = this.enderecoDAO.getEnderecos();
 
-        return "endereco";
-    }
+		return this.listEnderecos;
+	}
 
-    @GetMapping(value = "/enderecos/{id}/deletar")
-    public String deletar(@PathVariable int id, Model model, HttpSession session) {
-    	enderecoDAO.deleteEndereco(id);
-        return "redirect:/enderecos";
-    }
+	public void setListEnderecos(List<Endereco> listEnderecos) {
+		this.listEnderecos = listEnderecos;
+	}
+
+	public EnderecoDAO getEnderecoDAO() {
+		return enderecoDAO;
+	}
+
+	public void setEnderecoDAO(EnderecoDAO enderecoDAO) {
+		this.enderecoDAO = enderecoDAO;
+	}
+	
+	
+	
 }

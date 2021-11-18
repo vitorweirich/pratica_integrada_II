@@ -1,6 +1,6 @@
 package edu.com.unoesc.restaurante.models;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -14,8 +14,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "funcionarios")
@@ -27,7 +28,8 @@ public class Funcionario {
 	@Column(name = "nome")
 	private String nome;
 	@Column(name = "data_nasc")
-	private LocalDate nascimento;
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date nascimento;
 	@Column(name = "cpf")
 	private String cpf;
 	@Column(name = "funcao")
@@ -40,7 +42,7 @@ public class Funcionario {
 	@JoinColumn(name = "id_estabelecimento", referencedColumnName = "id")
 	private Estabelecimento estabelecimento;
 
-	public Funcionario(Integer id, String nome, LocalDate nascimento, String cpf, String funcao, Endereco endereco, Estabelecimento estabelecimento) {
+	public Funcionario(Integer id, String nome, Date nascimento, String cpf, String funcao, Endereco endereco, Estabelecimento estabelecimento) {
 		this.id = id;
 		this.nome = nome;
 		this.nascimento = nascimento;
@@ -70,11 +72,11 @@ public class Funcionario {
 		this.nome = nome;
 	}
 
-	public LocalDate getNascimento() {
+	public Date getNascimento() {
 		return nascimento;
 	}
 
-	public void setNascimento(LocalDate nascimento) {
+	public void setNascimento(Date nascimento) {
 		this.nascimento = nascimento;
 	}
 

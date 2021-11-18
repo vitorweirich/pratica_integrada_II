@@ -1,82 +1,70 @@
 package edu.com.unoesc.restaurante.controllers;
 
-import java.util.ArrayList;
+import java.io.Serializable;
+import java.util.List;
 
-import javax.servlet.http.HttpSession;
-import javax.validation.Valid;
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
+import javax.faces.bean.RequestScoped;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-
-import edu.com.unoesc.restaurante.dao.EnderecoDAO;
 import edu.com.unoesc.restaurante.dao.EstabelecimentoDAO;
-import edu.com.unoesc.restaurante.form.EstabelecimentoAdicionarForm;
-import edu.com.unoesc.restaurante.models.Endereco;
 import edu.com.unoesc.restaurante.models.Estabelecimento;
 
 
-@Controller
-public class EstabelecimentoController {
+@ManagedBean(name = "estabelecimentoMB")
+@RequestScoped
+public class EstabelecimentoController implements Serializable {
 	
-	@Autowired
-	EstabelecimentoDAO estabelecimentoDAO;
+	private Estabelecimento estabelecimento = new Estabelecimento();
+	private List<Estabelecimento> listEstabelecimentos = null;
 	
-	@Autowired
-	EnderecoDAO enderecoDAO;
+	@ManagedProperty(value = "#{EstabelecimentoDAO}")
+	private EstabelecimentoDAO estabelecimentoDAO;
 	
-	@RequestMapping(value = "/estabelecimentos", method = RequestMethod.GET)
-	public String estabelecimentosList(Model m) {
+	public void save() {
 
-		ArrayList<Estabelecimento> estabelecimentos = new ArrayList<>(estabelecimentoDAO.getEstabelecimentos());
-		
-		ArrayList<Endereco> enderecos = new ArrayList<>(enderecoDAO.getEnderecos());
-
-		m.addAttribute("listEnderecos", enderecos);
-		m.addAttribute("listEstabelecimentos", estabelecimentos);
-		m.addAttribute("estabelecimentoForm", new EstabelecimentoAdicionarForm());
-		
-		System.out.println(estabelecimentos.size());
-		
-		System.out.println(enderecos.size());
-
-		return "estabelecimento";
-	}
-	
-	@RequestMapping(value = "/estabelecimentoSave", method = RequestMethod.POST)
-	public String save(@Valid @ModelAttribute("estabelecimento") EstabelecimentoAdicionarForm estabelecimentoForm, BindingResult result) {
-		if(result.hasErrors()) {
-			return "redirect:/estabelecimentos";
-		}
-		
-		
-		Estabelecimento estabelecimento = estabelecimentoForm.getEstabelecimento(enderecoDAO);
-		if (estabelecimento.getId() == -1) {
-			estabelecimentoDAO.insertEstabelecimento(estabelecimento);
+		if (this.estabelecimento.getId() == -1) {
+			this.estabelecimentoDAO.insertEstabelecimento(estabelecimento);
 		} else {
-			estabelecimentoDAO.updateEstabelecimento(estabelecimento);
+			this.estabelecimentoDAO.updateEstabelecimento(estabelecimento);
 		}
-		
+		this.listEstabelecimentos = null;
 
-		return "redirect:/estabelecimentos";
+		this.estabelecimento = new Estabelecimento();
+
+	}
+
+	public void load(int id) {
+		estabelecimento = estabelecimentoDAO.getEstabelecimentoById(id);
+	}
+
+	public Estabelecimento getEstabelecimento() {
+		return estabelecimento;
+	}
+
+	public void setEstabelecimento(Estabelecimento estabelecimento) {
+		this.estabelecimento = estabelecimento;
+	}
+
+	public List<Estabelecimento> getListEstabelecimentos() {
+		if (this.listEstabelecimentos == null)
+			this.listEstabelecimentos = this.estabelecimentoDAO.getEstabelecimentos();
+
+		return this.listEstabelecimentos;
+	}
+
+	public void setListEstabelecimentos(List<Estabelecimento> listEstabelecimentos) {
+		this.listEstabelecimentos = listEstabelecimentos;
+	}
+
+	public EstabelecimentoDAO getEstabelecimentoDAO() {
+		return estabelecimentoDAO;
+	}
+
+	public void setEstabelecimentoDAO(EstabelecimentoDAO estabelecimentoDAO) {
+		this.estabelecimentoDAO = estabelecimentoDAO;
 	}
 	
-	@RequestMapping(value = "/estabelecimento/{id}")
-    public String produto(@PathVariable int id, Model model, HttpSession session) {
-
-		ArrayList<Endereco> enderecos = new ArrayList<>(enderecoDAO.getEnderecos());
-
-		model.addAttribute("listEnderecos", enderecos);
-        model.addAttribute("listEstabelecimentos", estabelecimentoDAO.getEstabelecimentos());
-        Estabelecimento estabelecimentoById = estabelecimentoDAO.getEstabelecimentoById(id);
-        model.addAttribute("estabelecimento", new EstabelecimentoAdicionarForm(estabelecimentoById));
-
-        return "estabelecimento";
-    }
+	
 
 }

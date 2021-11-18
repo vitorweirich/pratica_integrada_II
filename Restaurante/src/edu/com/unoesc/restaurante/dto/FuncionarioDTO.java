@@ -1,6 +1,6 @@
 package edu.com.unoesc.restaurante.dto;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import edu.com.unoesc.restaurante.models.Endereco;
 import edu.com.unoesc.restaurante.models.Estabelecimento;
@@ -10,13 +10,13 @@ public class FuncionarioDTO {
 
 	private Integer id;
 	private String nome;
-	private LocalDate nascimento;
+	private Date nascimento;
 	private String cpf;
 	private String funcao;
 	private Endereco endereco;
 	private EstabelecimentoDTO estabelecimento;
 
-	public FuncionarioDTO(Integer id, String nome, LocalDate nascimento, String cpf, String funcao, Endereco endereco,
+	public FuncionarioDTO(Integer id, String nome, Date nascimento, String cpf, String funcao, Endereco endereco,
 			Estabelecimento estabelecimento) {
 		this.id = id;
 		this.nome = nome;
@@ -53,11 +53,11 @@ public class FuncionarioDTO {
 		this.nome = nome;
 	}
 
-	public LocalDate getNascimento() {
+	public Date getNascimento() {
 		return nascimento;
 	}
 
-	public void setNascimento(LocalDate nascimento) {
+	public void setNascimento(Date nascimento) {
 		this.nascimento = nascimento;
 	}
 

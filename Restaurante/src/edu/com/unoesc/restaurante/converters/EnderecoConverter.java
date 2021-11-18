@@ -1,20 +1,33 @@
 package edu.com.unoesc.restaurante.converters;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.convert.converter.Converter;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
+import javax.faces.convert.Converter;
+import javax.faces.convert.FacesConverter;
 
-import edu.com.unoesc.restaurante.dao.EnderecoDAO;
 import edu.com.unoesc.restaurante.models.Endereco;
 
-public class EnderecoConverter implements Converter<Object, Endereco>{
-	@Autowired
-	EnderecoDAO enderecoDAO;
+@FacesConverter(value = "EnderecoConverter", forClass = Endereco.class)
+public class EnderecoConverter implements Converter{
 
 	@Override
-	public Endereco convert(Object source) {
-		Integer id = Integer.parseInt((String)source);
-		Endereco endereco = enderecoDAO.getEnderecoById(id);
-		
-		return endereco;
+	public Object getAsObject(FacesContext context, UIComponent component, String value) {
+		if (value != null && !value.isEmpty()) {
+			Endereco p = (Endereco) component.getAttributes().get(value);
+            return p;
+        }
+		return null;
 	}
+
+	@Override
+	public String getAsString(FacesContext context, UIComponent component, Object value) {
+		if (value != null && (value instanceof Endereco)) {
+			Endereco p = (Endereco) value; 
+			component.getAttributes().put( String.valueOf(p.getId()), p);
+            return String.valueOf(p.getId());
+        }
+		return null;
+	}
+	
+	
 }

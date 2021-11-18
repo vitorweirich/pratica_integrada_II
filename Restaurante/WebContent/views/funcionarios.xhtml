@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<p:breadCrumb>
+		<p:menuitem value="Categories" url="index.xhtml" />
+		<p:menuitem value="Funcionarios" url="#" />
+	</p:breadCrumb>
+</h:head>
+
+<h:body>
+
+	<p:panel style="width:70%; margin: 20px auto;" id="panel">
+		<p:dataTable var="c" value="#{funcionarioMB.listFuncionarios}" scrollable="true"
+			scrollHeight="200">
+
+			<p:column headerText="*">
+				<h:outputText value="#{c.id}" />
+			</p:column>
+
+			<p:column headerText="Nome">
+				<h:outputText value="#{c.nome}" />
+			</p:column>
+			
+			<p:column headerText="Data" width="140">
+				<h:outputText value="#{c.nascimento}">
+				 	<f:convertDateTime pattern="dd/MM/yyyy" />
+				</h:outputText>
+			</p:column>
+			
+			<p:column headerText="CPF">
+				<h:outputText value="#{c.cpf}" />
+			</p:column>
+
+			<p:column headerText="Funcao">
+				<h:outputText value="#{c.funcao}" />
+			</p:column>
+			
+			<p:column headerText="ID Estabelecimento">
+				<h:outputText value="#{c.estabelecimento.id}" />
+			</p:column>
+			
+			<p:column headerText="ID Endereço">
+				<h:outputText value="#{c.endereco.id}" />
+			</p:column>
+			
+
+			<p:column width="80">
+				<h:form>
+
+					<p:commandButton icon="ui-icon-pencil"
+						action="#{funcionarioMB.load(c.id)}" update="panelCad" />
+				</h:form>
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+
+	<p:panel id="panelCad" header="Cadastro" style="margin: 20px auto; width:40%;">
+		<h:form>
+			<h:inputHidden value="#{funcionarioMB.funcionario.id}" />
+
+			<p:growl id="growl" sticky="false" showDetail="false" />
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+				<p:outputLabel for="@next" value="Endereco:" />
+				<p:selectOneMenu id="id_end" value="#{funcionarioMB.funcionario.endereco}"  converter="EnderecoConverter"
+					style="width:125px">
+					<f:selectItems value="#{enderecoMB.listEnderecos}" var="c" itemLabel="#{c.logradouro}" itemValue="#{c}"/>
+				</p:selectOneMenu>
+				
+				<p:outputLabel for="@next" value="Estabelecimento:" />
+				<p:selectOneMenu id="id_est" value="#{funcionarioMB.funcionario.estabelecimento}"  converter="EstabelecimentoConverter"
+					style="width:125px">
+					<f:selectItems value="#{estabelecimentoMB.listEstabelecimentos}" var="d" itemLabel="#{d.nome}" itemValue="#{d}"/>
+				</p:selectOneMenu>
+
+				<h:outputText value="Nome: " />
+				<p:inputText value="#{funcionarioMB.funcionario.nome}" />
+				
+				<h:outputLabel for="data" value="Data de nascimento:" />
+				<p:datePicker id="data" value="#{funcionarioMB.funcionario.nascimento}"
+					showIcon="true" />
+					
+				<h:outputText value="Cpf: " />
+				<p:inputText value="#{funcionarioMB.funcionario.cpf}" />
+				
+				<h:outputText value="Funcao: " />
+				<p:inputText value="#{funcionarioMB.funcionario.funcao}" />
+				
+				<p:commandButton value="Salvar" icon="ui-icon-disk" update="panel panelCad"
+					action="#{funcionarioMB.save}" style="margin-right:20px;" />
+
+			</h:panelGrid>
+		</h:form>
+	</p:panel>
+
+</h:body>
+</html>

@@ -2,7 +2,6 @@ package edu.com.unoesc.restaurante.form;
 
 import edu.com.unoesc.restaurante.dao.EnderecoDAO;
 import edu.com.unoesc.restaurante.dao.EstabelecimentoDAO;
-import edu.com.unoesc.restaurante.dao.FuncionarioDAO;
 import edu.com.unoesc.restaurante.models.Endereco;
 import edu.com.unoesc.restaurante.models.Estabelecimento;
 import edu.com.unoesc.restaurante.models.Funcionario;

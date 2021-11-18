@@ -51,7 +51,7 @@ public class Funcionario {
 	}
 
 	public Funcionario() {
-
+		this.id = -1;
 	}
 
 	public Integer getId() {

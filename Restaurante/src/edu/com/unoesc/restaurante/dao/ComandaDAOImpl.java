@@ -21,9 +21,8 @@ public class ComandaDAOImpl implements ComandaDAO {
 	@Transactional
 	public Comanda getComandaById(Integer id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Comanda c = (Comanda) session.get(Comanda.class, id);
 
-		return c;
+		return session.get(Comanda.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -37,7 +36,7 @@ public class ComandaDAOImpl implements ComandaDAO {
 	@Transactional
 	public boolean deleteComanda(int id) {
 		Session session = this.sessionFactory.getCurrentSession();
-		Comanda c = (Comanda) session.load(Comanda.class, id);
+		Comanda c = session.load(Comanda.class, id);
 		if (c!=null) {
 			session.delete(c);
 			return true;

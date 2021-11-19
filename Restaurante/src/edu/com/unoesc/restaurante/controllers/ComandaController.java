@@ -26,6 +26,7 @@ public class ComandaController implements Serializable {
             this.comanda.setDataCriacao(LocalDateTime.now());
             this.comandaDAO.insertComanda(comanda);
         } else {
+            System.out.println(comanda);
             this.comandaDAO.updateComanda(comanda);
         }
         this.listComandas = null;

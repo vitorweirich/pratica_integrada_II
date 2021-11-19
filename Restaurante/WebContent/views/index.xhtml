@@ -10,14 +10,28 @@
 <h:head>
 </h:head>
 <h:body>
-	<p:panel id="panelCad" header="Menu"
-		style="margin: 20px auto; width:170px;">
-		<p:linkButton outcome="categoria.xhtml" value="Categorias" style="margin-right:20px; width:150px;" />
-		<p:linkButton outcome="endereco.xhtml" value="Endereços" style="margin-right:20px; width:150px;" />
-		<p:linkButton outcome="estabelecimento.xhtml" value="Estabelecimentos" style="margin-right:20px; width:150px;" />
-		<p:linkButton outcome="funcionarios.xhtml" value="Funcionarios" style="margin-right:20px; width:150px;" />
-		<p:linkButton outcome="produto.xhtml" value="Produtos" style="margin-right:20px; width:150px;" />
-		<p:linkButton outcome="comanda.xhtml" value="Comandas" style="margin-right:20px; width:150px;" />
-	</p:panel>
+	<div class="card">
+		<h:form>
+			<p:growl>
+				<p:autoUpdate/>
+			</p:growl>
+			<p:panelMenu style="width:300px">
+				<p:submenu label="Cadastros">
+					<p:menuitem label="Categorias" icon="pi pi-fw pi-file" outcome="categoria.xhtml" value="Categorias"/>
+					<p:menuitem label="Endereços" icon="pi pi-fw pi-file" outcome="endereco.xhtml" value="Endereços"/>
+					<p:menuitem label="Estabelecimentos" icon="pi pi-fw pi-file" outcome="estabelecimento.xhtml" value="Estabelecimentos"/>
+					<p:menuitem label="Funcionarios" icon="pi pi-fw pi-file" outcome="funcionarios.xhtml" value="Funcionarios"/>
+					<p:menuitem label="Produtos" icon="pi pi-fw pi-file" outcome="produto.xhtml" value="Produtos"/>
+					<p:menuitem label="Comandas" icon="pi pi-fw pi-file" outcome="comanda.xhtml" value="Comandas"/>
+				</p:submenu>
+			</p:panelMenu>
+			<p:panelMenu style="width:300px">
+				<p:submenu label="Listagens de pedidos">
+					<p:menuitem label="Cozinha" icon="pi pi-fw pi-file" outcome="categoria.xhtml" value="Cozinha"/>
+					<p:menuitem label="Garçon" icon="pi pi-fw pi-file" outcome="endereco.xhtml" value="Garçon"/>
+				</p:submenu>
+			</p:panelMenu>
+		</h:form>
+	</div>
 </h:body>
 </html>

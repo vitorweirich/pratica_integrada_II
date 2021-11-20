@@ -1,6 +1,9 @@
 package edu.com.unoesc.restaurante.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,8 +12,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 @Entity
 @Table(name = "comandas")
@@ -34,6 +42,29 @@ public class Comanda {
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_estabelecimento", referencedColumnName = "id")
 	private Estabelecimento estabelecimento;
+	@ManyToMany(fetch = FetchType.EAGER)
+	@JoinTable(name = "pedidos", joinColumns = { @JoinColumn(name = "id_comandas") }, inverseJoinColumns = {
+			@JoinColumn(name = "id_produtos") })
+	private List<Produto> produtos = new ArrayList<Produto>();
+	@JsonBackReference()
+	@OneToMany(mappedBy = "comanda", fetch = FetchType.EAGER)
+	private List<Pedido> pedidos = new ArrayList<Pedido>();
+
+	public List<Pedido> getPedidos() {
+		return pedidos;
+	}
+
+	public void setPedidos(List<Pedido> pedidos) {
+		this.pedidos = pedidos;
+	}
+
+	public List<Produto> getProdutos() {
+		return produtos;
+	}
+
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}
 
 	public Comanda() {
 		this.id = -1;

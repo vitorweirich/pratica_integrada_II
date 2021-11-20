@@ -34,8 +34,15 @@ public class ComandaController implements Serializable {
         this.comanda = new Comanda();
 
     }
+    
+    public String detalhe(int id) {
+    	System.out.println("Entraskdasghdabs");
+        comanda = comandaDAO.getComandaById(id);
+    	return "comandaDetalhe.xhtml";
+    }
 
     public void load(int id) {
+    	System.out.println("Entraskdasghdabs");
         comanda = comandaDAO.getComandaById(id);
     }
 

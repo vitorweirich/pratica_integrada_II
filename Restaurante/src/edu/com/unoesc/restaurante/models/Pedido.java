@@ -37,6 +37,10 @@ public class Pedido {
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "id_produtos", referencedColumnName = "id")
 	private Produto produto;
+	
+	public Pedido() {
+		this.id = -1;
+	}
 
 	public Integer getId() {
 		return id;

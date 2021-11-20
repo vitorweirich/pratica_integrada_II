@@ -2,84 +2,92 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui">
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
-  <p:breadCrumb>
-    <p:menuitem value="Index" url="index.xhtml" />
-    <p:menuitem value="Comanda" url="#" />
-  </p:breadCrumb>
+	<p:breadCrumb>
+		<p:menuitem value="Index" url="index.xhtml" />
+		<p:menuitem value="Comanda" url="#" />
+	</p:breadCrumb>
 </h:head>
 <h:body>
 
-  <p:panel style="width:70%; margin: 20px auto;" id="panel">
-    <p:dataTable var="c" value="#{comandaMB.listComandas}" scrollable="true"
-                 scrollHeight="200">
+	<p:panel style="width:70%; margin: 20px auto;" id="panel">
+		<p:dataTable var="c" value="#{comandaMB.listComandas}"
+			scrollable="true" scrollHeight="200">
 
-      <p:column headerText="*">
-        <h:outputText value="#{c.id}" />
-      </p:column>
-      <p:column headerText="Estabelecimento">
-        <h:outputText value="#{c.estabelecimento.id}" />
-      </p:column>
-      <p:column headerText="Mesa">
-        <h:outputText value="#{c.mesa}" />
-      </p:column>
-      <p:column headerText="Data Criação">
-        <h:outputText value="#{c.dataCriacao}" />
-      </p:column>
-      <p:column headerText="Data Finalização">
-        <h:outputText value="#{c.dataFinalizacao}" />
-      </p:column>
-      <p:column headerText="Desconto">
-        <h:outputText value="#{c.desconto}" />
-      </p:column>
-      <p:column headerText="Valor Pago">
-        <h:outputText value="#{c.valorPago}" />
-      </p:column>
-      <p:column headerText="Valor Total">
-        <h:outputText value="#{c.valorTotal}" />
-      </p:column>
+			<p:column headerText="*">
+				<h:outputText value="#{c.id}" />
+			</p:column>
+			<p:column headerText="Estabelecimento">
+				<h:outputText value="#{c.estabelecimento.id}" />
+			</p:column>
+			<p:column headerText="Mesa">
+				<h:outputText value="#{c.mesa}" />
+			</p:column>
+			<p:column headerText="Data Criação">
+				<h:outputText value="#{c.dataCriacao}" />
+			</p:column>
+			<p:column headerText="Data Finalização">
+				<h:outputText value="#{c.dataFinalizacao}" />
+			</p:column>
+			<p:column headerText="Desconto">
+				<h:outputText value="#{c.desconto}" />
+			</p:column>
+			<p:column headerText="Valor Pago">
+				<h:outputText value="#{c.valorPago}" />
+			</p:column>
+			<p:column headerText="Valor Total">
+				<h:outputText value="#{c.valorTotal}" />
+			</p:column>
 
-      <p:column width="100">
-        <h:form>
-          <p:commandButton icon="ui-icon-pencil"
-                           action="#{comandaMB.load(c.id)}" update="panelCad" />
-        </h:form>
-        <h:form style="margin-top: 5px">
-          <p:commandButton icon="ui-icon-extlink"
-                           action="#{comandaMB.load(c.id)}" update="panelCad" />
-        </h:form>
-      </p:column>
-    </p:dataTable>
-  </p:panel>
+			<p:column width="100">
+				<h:form>
+					<p:commandButton icon="ui-icon-pencil"
+						action="#{comandaMB.load(c.id)}" update="panelCad" />
+				</h:form>
+				<h:form style="margin-top: 5px">
+					<p:commandButton  icon="ui-icon-extlink" action="#{comandaMB.detalhe(c.id)}"
+						 update="panelCad" />
+				</h:form>
+<!-- 				<p:linkButton outcome="productDetail" value="Bookmark" -->
+<!-- 					style="margin-right:20px;"> -->
+<!-- 					<f:param name="productId" value="10" /> -->
+<!-- 				</p:linkButton> -->
+			</p:column>
+		</p:dataTable>
+	</p:panel>
 
-  <p:panel id="panelCad" header="Cadastro" style="margin: 20px auto; width:40%;">
-    <h:form>
-      <h:inputHidden value="#{comandaMB.comanda.id}" />
-      <h:inputHidden value="#{comandaMB.comanda.dataCriacao}" />
+	<p:panel id="panelCad" header="Cadastro"
+		style="margin: 20px auto; width:40%;">
+		<h:form>
+			<h:inputHidden value="#{comandaMB.comanda.id}" />
+			<h:inputHidden value="#{comandaMB.comanda.dataCriacao}" />
 
-      <p:growl id="growl" sticky="false" showDetail="false" />
-      <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+			<p:growl id="growl" sticky="false" showDetail="false" />
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
-        <p:outputLabel for="@next" value="Estabelecimento:" />
-        <p:selectOneMenu id="id_est" value="#{comandaMB.comanda.estabelecimento}"  converter="EstabelecimentoConverter"
-                         style="width:125px">
-          <f:selectItems value="#{estabelecimentoMB.listEstabelecimentos}" var="d" itemLabel="#{d.nome}" itemValue="#{d}"/>
-        </p:selectOneMenu>
+				<p:outputLabel for="@next" value="Estabelecimento:" />
+				<p:selectOneMenu id="id_est"
+					value="#{comandaMB.comanda.estabelecimento}"
+					converter="EstabelecimentoConverter" style="width:125px">
+					<f:selectItems value="#{estabelecimentoMB.listEstabelecimentos}"
+						var="d" itemLabel="#{d.nome}" itemValue="#{d}" />
+				</p:selectOneMenu>
 
-        <h:outputText value="Mesa: " />
-        <p:inputText value="#{comandaMB.comanda.mesa}" />
+				<h:outputText value="Mesa: " />
+				<p:inputText value="#{comandaMB.comanda.mesa}" />
 
-        <p:commandButton value="Salvar" icon="ui-icon-disk" update="panel panelCad"
-                         action="#{comandaMB.save}" style="margin-right:20px;" />
+				<p:commandButton value="Salvar" icon="ui-icon-disk"
+					update="panel panelCad" action="#{comandaMB.save}"
+					style="margin-right:20px;" />
 
-      </h:panelGrid>
-    </h:form>
-  </p:panel>
+			</h:panelGrid>
+		</h:form>
+	</p:panel>
 
 </h:body>
 </html>

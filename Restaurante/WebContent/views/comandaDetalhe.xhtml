@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<p:breadCrumb>
+		<p:menuitem value="Index" url="index.xhtml" />
+		<p:menuitem value="Comanda" url="#" />
+	</p:breadCrumb>
+</h:head>
+<h:body>
+
+	<p:panel style="width:70%; margin: 20px auto;" id="panel">
+		<p:dataTable value="#{comandaMB.comanda}" scrollable="true"
+			scrollHeight="200">
+
+			<p:column headerText="*">
+				<h:outputText value="#{comandaMB.comanda.id}" />
+			</p:column>
+			<p:column headerText="Estabelecimento">
+				<h:outputText value="#{comandaMB.comanda.estabelecimento.id}" />
+			</p:column>
+			<p:column headerText="Mesa">
+				<h:outputText value="#{comandaMB.comanda.mesa}" />
+			</p:column>
+			<p:column headerText="Data Criação">
+				<h:outputText value="#{comandaMB.comanda.dataCriacao}" />
+			</p:column>
+			<p:column headerText="Data Finalização">
+				<h:outputText value="#{comandaMB.comanda.dataFinalizacao}" />
+			</p:column>
+			<p:column headerText="Desconto">
+				<h:outputText value="#{comandaMB.comanda.desconto}" />
+			</p:column>
+			<p:column headerText="Valor Pago">
+				<h:outputText value="#{comandaMB.comanda.valorPago}" />
+			</p:column>
+			<p:column headerText="Valor Total">
+				<h:outputText value="#{comandaMB.comanda.valorTotal}" />
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+
+	<p:panel id="panelCad" header="Cadastro"
+		style="margin: 20px auto; width:40%;">
+		<h:form>
+			<h:inputHidden value="#{pedidoMB.pedido.id}" />
+
+			<p:growl id="growl" sticky="false" showDetail="false" />
+			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+
+				<p:outputLabel for="@next" value="Comanda:" />
+				<p:selectOneMenu id="comanda" value="#{pedidoMB.pedido.comanda}"
+					converter="ComandaConverter" style="width:125px">
+					<f:selectItems value="#{comandaMB.listComandas}" var="y"
+						itemLabel="#{y.id}" itemValue="#{y}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel for="@next" value="Produto:" />
+				<p:selectOneMenu id="produto" value="#{pedidoMB.pedido.produto}"
+					converter="ProdutoConverter" style="width:125px">
+					<f:selectItems value="#{produtoMB.listProdutos}" var="x"
+						itemLabel="#{x.nome}" itemValue="#{x}" />
+				</p:selectOneMenu>
+
+				<h:outputText value="Quantidade: " />
+				<p:inputText value="#{pedidoMB.pedido.quantidade}" />
+<!-- 				<h:inputHidden id="id_comanda" value="#{comandaMB.comanda.id}" /> -->
+				<p:commandButton value="Salvar" icon="ui-icon-disk"
+					update="panel panelCad panelProdutos"
+					action="#{pedidoMB.save(60)}"
+					style="margin-right:20px;" />
+
+			</h:panelGrid>
+		</h:form>
+	</p:panel>
+	
+	<p:panel style="width:70%; margin: 20px auto;" id="panelProdutos">
+		<p:dataTable var="c" value="#{comandaMB.comanda.pedidos}" scrollable="true"
+			scrollHeight="200">
+
+			<p:column headerText="*">
+				<h:outputText value="#{c.id}" />
+			</p:column>
+
+			<p:column headerText="Nome">
+				<h:outputText value="#{c.produto.nome}" />
+			</p:column>
+			
+			<p:column headerText="Unidades">
+				<h:outputText value="#{c.quantidade}" />
+			</p:column>
+			
+			<p:column headerText="Preço">
+				<h:outputText value="#{c.produto.preco}" />
+			</p:column>
+
+			<p:column headerText="Quantidade">
+				<h:outputText value="#{c.produto.quantidade}" />
+			</p:column>
+			
+			<p:column headerText="Unidade de Medida">
+				<h:outputText value="#{c.produto.unidadeMedida}" />
+			</p:column>
+			
+			<p:column headerText="Cozido?">
+				<h:outputText value="#{c.produto.cozido}" />
+			</p:column>
+			
+			<p:column headerText="Nome Estabelecimento">
+				<h:outputText value="#{c.produto.estabelecimento.nome}" />
+			</p:column>
+			
+			<p:column headerText="Nome Categoria">
+				<h:outputText value="#{c.produto.categoria.descricao}" />
+			</p:column>
+		</p:dataTable>
+	</p:panel>
+
+</h:body>
+</html>

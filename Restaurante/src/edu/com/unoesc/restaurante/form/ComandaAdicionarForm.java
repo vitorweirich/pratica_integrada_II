@@ -1,12 +1,12 @@
 package edu.com.unoesc.restaurante.form;
 
-import edu.com.unoesc.restaurante.dao.EstabelecimentoDAO;
-import edu.com.unoesc.restaurante.models.*;
+import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDateTime;
-import java.util.List;
+
+import edu.com.unoesc.restaurante.models.Produto;
 
 public class ComandaAdicionarForm {
 
@@ -109,8 +109,8 @@ public class ComandaAdicionarForm {
         this.estabelecimento = estabelecimento;
     }
 
-    public Comanda getComanda(EstabelecimentoDAO estabelecimentoDAO) {
-        Estabelecimento estabelecimentoById = estabelecimentoDAO.getEstabelecimentoById(this.getEstabelecimento());
-        return new Comanda(id, valorTotal, desconto, valorPago, mesa, dataCriacao, dataFinalizacao, estabelecimentoById);
-    }
+//    public Comanda getComanda(EstabelecimentoDAO estabelecimentoDAO) {
+//        Estabelecimento estabelecimentoById = estabelecimentoDAO.getEstabelecimentoById(this.getEstabelecimento());
+//        return new Comanda(id, valorTotal, desconto, valorPago, mesa, dataCriacao, dataFinalizacao, estabelecimentoById);
+//    }
 }

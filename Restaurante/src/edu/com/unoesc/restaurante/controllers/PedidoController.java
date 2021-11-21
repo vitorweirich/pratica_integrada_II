@@ -34,9 +34,8 @@ public class PedidoController implements Serializable {
 		this.comandaDAO = comandaDAO;
 	}
 
-	public void save(Integer id) {
+	public void save() {
 		System.out.println("a porro do id da comanda é   " + this.pedido.getComanda().getId() + "  seu MERDA");
-		this.pedido.setComanda(this.pedido.getComanda());
 		if (this.pedido.getId() == -1) {
 			this.pedidoDAO.insertPedido(pedido);
 		} else {

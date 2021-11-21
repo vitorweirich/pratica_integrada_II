@@ -50,13 +50,13 @@
 		style="margin: 20px auto; width:40%;">
 		<h:form>
 			<h:inputHidden value="#{pedidoMB.pedido.id}" />
-
+			<h:inputHidden rendered="#{pedidoMB.pedido.setComanda(comandaMB.comanda)}" value="" />
+	
 			<p:growl id="growl" sticky="false" showDetail="false" />
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-
-				<p:outputLabel for="@next" value="Comanda:" />
+<!-- 				<p:outputLabel for="@next" value="Comanda:" /> -->
 				<p:selectOneMenu id="comanda" value="#{pedidoMB.pedido.comanda}"
-					converter="ComandaConverter" style="width:125px">
+					converter="ComandaConverter" style="width:125px; display: none">
 					<f:selectItems value="#{comandaMB.listComandas}" var="y"
 						itemLabel="#{y.id}" itemValue="#{y}" />
 				</p:selectOneMenu>
@@ -70,11 +70,11 @@
 
 				<h:outputText value="Quantidade: " />
 				<p:inputText value="#{pedidoMB.pedido.quantidade}" />
-<!-- 				<h:inputHidden id="id_comanda" value="#{comandaMB.comanda.id}" /> -->
 				<p:commandButton value="Salvar" icon="ui-icon-disk"
 					update="panel panelCad panelProdutos"
-					action="#{pedidoMB.save(60)}"
-					style="margin-right:20px;" />
+					action="#{pedidoMB.save}"
+					style="margin-right:20px;">
+					</p:commandButton>
 
 			</h:panelGrid>
 		</h:form>

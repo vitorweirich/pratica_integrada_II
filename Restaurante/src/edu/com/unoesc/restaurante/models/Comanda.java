@@ -3,6 +3,7 @@ package edu.com.unoesc.restaurante.models;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -147,17 +148,7 @@ public class Comanda {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((dataCriacao == null) ? 0 : dataCriacao.hashCode());
-		result = prime * result + ((dataFinalizacao == null) ? 0 : dataFinalizacao.hashCode());
-		result = prime * result + ((desconto == null) ? 0 : desconto.hashCode());
-		result = prime * result + ((estabelecimento == null) ? 0 : estabelecimento.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((mesa == null) ? 0 : mesa.hashCode());
-		result = prime * result + ((valorPago == null) ? 0 : valorPago.hashCode());
-		result = prime * result + ((valorTotal == null) ? 0 : valorTotal.hashCode());
-		return result;
+		return Objects.hash(dataCriacao, dataFinalizacao, desconto, estabelecimento, id, mesa, valorPago, valorTotal);
 	}
 
 	@Override
@@ -169,47 +160,10 @@ public class Comanda {
 		if (getClass() != obj.getClass())
 			return false;
 		Comanda other = (Comanda) obj;
-		if (dataCriacao == null) {
-			if (other.dataCriacao != null)
-				return false;
-		} else if (!dataCriacao.equals(other.dataCriacao))
-			return false;
-		if (dataFinalizacao == null) {
-			if (other.dataFinalizacao != null)
-				return false;
-		} else if (!dataFinalizacao.equals(other.dataFinalizacao))
-			return false;
-		if (desconto == null) {
-			if (other.desconto != null)
-				return false;
-		} else if (!desconto.equals(other.desconto))
-			return false;
-		if (estabelecimento == null) {
-			if (other.estabelecimento != null)
-				return false;
-		} else if (!estabelecimento.equals(other.estabelecimento))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (mesa == null) {
-			if (other.mesa != null)
-				return false;
-		} else if (!mesa.equals(other.mesa))
-			return false;
-		if (valorPago == null) {
-			if (other.valorPago != null)
-				return false;
-		} else if (!valorPago.equals(other.valorPago))
-			return false;
-		if (valorTotal == null) {
-			if (other.valorTotal != null)
-				return false;
-		} else if (!valorTotal.equals(other.valorTotal))
-			return false;
-		return true;
+		return Objects.equals(dataCriacao, other.dataCriacao) && Objects.equals(dataFinalizacao, other.dataFinalizacao)
+				&& Objects.equals(desconto, other.desconto) && Objects.equals(estabelecimento, other.estabelecimento)
+				&& Objects.equals(id, other.id) && Objects.equals(mesa, other.mesa)
+				&& Objects.equals(valorPago, other.valorPago) && Objects.equals(valorTotal, other.valorTotal);
 	}
 
 }

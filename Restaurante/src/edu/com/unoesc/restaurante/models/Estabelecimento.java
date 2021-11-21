@@ -2,6 +2,7 @@ package edu.com.unoesc.restaurante.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -60,17 +61,7 @@ public class Estabelecimento {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((cnpj == null) ? 0 : cnpj.hashCode());
-		result = prime * result + ((endereco == null) ? 0 : endereco.hashCode());
-		result = prime * result + ((funcionarios == null) ? 0 : funcionarios.hashCode());
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		result = prime * result + ((inscricaoEstadual == null) ? 0 : inscricaoEstadual.hashCode());
-		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((razaoSocial == null) ? 0 : razaoSocial.hashCode());
-		result = prime * result + ((telefone == null) ? 0 : telefone.hashCode());
-		return result;
+		return Objects.hash(cnpj, endereco, id, inscricaoEstadual, nome, razaoSocial, telefone);
 	}
 
 	@Override
@@ -82,47 +73,10 @@ public class Estabelecimento {
 		if (getClass() != obj.getClass())
 			return false;
 		Estabelecimento other = (Estabelecimento) obj;
-		if (cnpj == null) {
-			if (other.cnpj != null)
-				return false;
-		} else if (!cnpj.equals(other.cnpj))
-			return false;
-		if (endereco == null) {
-			if (other.endereco != null)
-				return false;
-		} else if (!endereco.equals(other.endereco))
-			return false;
-		if (funcionarios == null) {
-			if (other.funcionarios != null)
-				return false;
-		} else if (!funcionarios.equals(other.funcionarios))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (inscricaoEstadual == null) {
-			if (other.inscricaoEstadual != null)
-				return false;
-		} else if (!inscricaoEstadual.equals(other.inscricaoEstadual))
-			return false;
-		if (nome == null) {
-			if (other.nome != null)
-				return false;
-		} else if (!nome.equals(other.nome))
-			return false;
-		if (razaoSocial == null) {
-			if (other.razaoSocial != null)
-				return false;
-		} else if (!razaoSocial.equals(other.razaoSocial))
-			return false;
-		if (telefone == null) {
-			if (other.telefone != null)
-				return false;
-		} else if (!telefone.equals(other.telefone))
-			return false;
-		return true;
+		return Objects.equals(cnpj, other.cnpj) && Objects.equals(endereco, other.endereco)
+				&& Objects.equals(id, other.id) && Objects.equals(inscricaoEstadual, other.inscricaoEstadual)
+				&& Objects.equals(nome, other.nome) && Objects.equals(razaoSocial, other.razaoSocial)
+				&& Objects.equals(telefone, other.telefone);
 	}
 
 	public Integer getId() {

@@ -71,6 +71,17 @@ create table Pedidos (
     foreign key(id_produtos) references Produtos(id)
 );
 
+create table log (
+	identificador serial,
+	tabela varchar (50),
+	operacao varchar (10),
+	dadosNovos text,
+	dadosAntigos text
+)
+
+create sequence identificador_cont start with 1
+alter sequence identificador_cont owned by log.identificador
+
 create or replace function atualizapreco()
 returns trigger
 as $$
@@ -96,3 +107,27 @@ $$ language plpgsql;
 create trigger atualizacomanda
 before insert or update on pedidos
 for each row execute procedure atualizapreco();
+
+create or replace function check_change() returns trigger as $$
+declare dadosAntigos text; dadosNovos text;
+   begin
+       if (tg_op = 'UPDATE') then
+       		dadosAntigos := ROW(old.*);
+       		dadosNovos := row(new.*);
+       		insert into log (tabela, operacao, dadosNovos, dadosAntigos) values ('comandas', 'update', dadosNovos, dadosAntigos);
+       		return new;
+       elsif (tg_op = 'INSERT') then
+       		dadosNovos := row(new.*);
+       		insert into log (tabela, operacao, dadosNovos, dadosAntigos) values ('comandas', 'insert', dadosNovos, 0);
+       		return new;
+	   elsif (tg_op = 'DELETE') then
+			dadosAntigos := ROW(old.*);
+	   		insert into log (tabela, operacao, dadosNovos, dadosAntigos) values ('comandas', 'delete', 0, dadosAntigos);
+	   		return old;
+	   end if;
+   end;
+$$ language plpgsql;
+
+create trigger table_update_comandas
+before update or delete or insert on comandas
+for each row execute procedure check_change();

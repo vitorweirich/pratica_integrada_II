@@ -64,9 +64,35 @@ create table Pedidos (
     id_comandas integer not null,
     id_produtos integer not null,
     id serial primary key,
-    data_hora_criacao timestamp,
+    data_hora_criacao timestamp not null,
     data_hora_finalizacao timestamp,
     data_hora_entrega timestamp,
     foreign key(id_comandas) references Comandas(id),
     foreign key(id_produtos) references Produtos(id)
 );
+
+create or replace function atualizapreco()
+returns trigger
+as $$
+declare preco float; precoatual float; produto record;
+begin
+	raise notice  'id produto %', new.id_produtos;
+	select p.preco from produtos p where p.id = new.id_produtos into preco;
+	raise notice 'preco %', preco;
+	select c.valor_total from comandas c where c.id = new.id_comandas into precoatual;
+	if precoatual is null then
+		precoatual = 0;
+	end if;
+	raise notice 'precoatual %', precoatual;
+	preco:= preco * new.qntd + precoatual;
+
+	raise notice 'preco %', preco;
+	update comandas set valor_total = preco where id = new.id_comandas;
+
+	return new;
+end;
+$$ language plpgsql;  
+
+create trigger atualizacomanda
+before insert or update on pedidos
+for each row execute procedure atualizapreco();

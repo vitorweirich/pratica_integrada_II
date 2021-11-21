@@ -1,6 +1,8 @@
 package edu.com.unoesc.restaurante.controllers;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
@@ -9,8 +11,6 @@ import javax.faces.bean.RequestScoped;
 
 import edu.com.unoesc.restaurante.dao.ComandaDAO;
 import edu.com.unoesc.restaurante.dao.PedidoDAO;
-import edu.com.unoesc.restaurante.dao.ProdutoDAO;
-import edu.com.unoesc.restaurante.models.Comanda;
 import edu.com.unoesc.restaurante.models.Pedido;
 
 @ManagedBean(name = "pedidoMB")
@@ -18,7 +18,8 @@ import edu.com.unoesc.restaurante.models.Pedido;
 public class PedidoController implements Serializable {
 
 	private Pedido pedido = new Pedido();
-	private List<Pedido> listPedidos = null;
+	private List<Pedido> listPedidosCozinha = null;
+	private List<Pedido> listPedidosGarcom = null;
 
 	@ManagedProperty(value = "#{PedidoDAO}")
 	private PedidoDAO pedidoDAO;
@@ -36,12 +37,14 @@ public class PedidoController implements Serializable {
 
 	public void save() {
 		System.out.println("a porro do id da comanda é   " + this.pedido.getComanda().getId() + "  seu MERDA");
+		this.pedido.setDataCriacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 		if (this.pedido.getId() == -1) {
 			this.pedidoDAO.insertPedido(pedido);
 		} else {
 			this.pedidoDAO.updatePedido(pedido);
 		}
-		this.listPedidos = null;
+		this.listPedidosCozinha = null;
+		this.listPedidosGarcom = null;
 
 		this.pedido = new Pedido();
 
@@ -49,6 +52,18 @@ public class PedidoController implements Serializable {
 
 	public void load(int id) {
 		pedido = pedidoDAO.getPedidoById(id);
+	}
+	
+	public void finalizar(Pedido pedido) {
+		pedido.setDataFinalizacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+		this.pedidoDAO.updatePedido(pedido);
+		this.listPedidosCozinha = null;
+	}
+	
+	public void entregar(Pedido pedido) {
+		pedido.setDataEntrega(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+		this.pedidoDAO.updatePedido(pedido);
+		this.listPedidosGarcom = null;
 	}
 
 	public Pedido getPedido() {
@@ -59,15 +74,28 @@ public class PedidoController implements Serializable {
 		this.pedido = produto;
 	}
 
-	public List<Pedido> getListPedidos() {
-		if (this.listPedidos == null)
-			this.listPedidos = this.pedidoDAO.getPedidos();
+	public List<Pedido> getListPedidosCozinha() {
+		if (this.listPedidosCozinha == null) {
+			this.listPedidosCozinha = this.pedidoDAO.getPedidosCozinha();
+		}
 
-		return this.listPedidos;
+		return this.listPedidosCozinha;
+	}
+	
+	public List<Pedido> getListPedidosGarcom() {
+		if (this.listPedidosGarcom == null) {
+			this.listPedidosGarcom = this.pedidoDAO.getPedidosGarcom();
+		}
+		
+		return this.listPedidosGarcom;
 	}
 
-	public void setListPedidos(List<Pedido> listProdutos) {
-		this.listPedidos = listProdutos;
+	public void setLististPedidosGarcom(List<Pedido> listProdutos) {
+		this.listPedidosGarcom = listProdutos;
+	}
+	
+	public void setListPedidosCozinha(List<Pedido> listProdutos) {
+		this.listPedidosCozinha = listProdutos;
 	}
 
 	public PedidoDAO getPedidoDAO() {

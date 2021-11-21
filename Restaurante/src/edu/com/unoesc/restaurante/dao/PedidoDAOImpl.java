@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -31,6 +32,20 @@ public class PedidoDAOImpl implements PedidoDAO {
 	@Transactional
 	public List<Pedido> getPedidos() {
 		return (List<Pedido>) this.sessionFactory.getCurrentSession().createQuery("from Pedido").list();
+	}
+	
+	@Override
+	@Transactional
+	public List<Pedido> getPedidosCozinha() {
+		NativeQuery<Pedido> query = this.sessionFactory.getCurrentSession().createNativeQuery("select * from pedidos p where p.data_hora_finalizacao is null order by data_hora_criacao", Pedido.class);
+		return (List<Pedido>) query.getResultList();
+	}
+	
+	@Override
+	@Transactional
+	public List<Pedido> getPedidosGarcom() {
+		NativeQuery<Pedido> query = this.sessionFactory.getCurrentSession().createNativeQuery("select * from pedidos p where p.data_hora_entrega is null order by data_hora_criacao", Pedido.class);
+		return (List<Pedido>) query.getResultList();
 	}
 
 	@Override

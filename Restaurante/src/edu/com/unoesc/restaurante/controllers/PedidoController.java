@@ -36,7 +36,6 @@ public class PedidoController implements Serializable {
 	}
 
 	public void save() {
-		System.out.println("a porro do id da comanda é   " + this.pedido.getComanda().getId() + "  seu MERDA");
 		this.pedido.setDataCriacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 		if (this.pedido.getId() == -1) {
 			this.pedidoDAO.insertPedido(pedido);
@@ -78,7 +77,7 @@ public class PedidoController implements Serializable {
 		if (this.listPedidosCozinha == null) {
 			this.listPedidosCozinha = this.pedidoDAO.getPedidosCozinha();
 		}
-
+		
 		return this.listPedidosCozinha;
 	}
 	

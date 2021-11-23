@@ -44,7 +44,7 @@ public class PedidoDAOImpl implements PedidoDAO {
 	@Override
 	@Transactional
 	public List<Pedido> getPedidosGarcom() {
-		NativeQuery<Pedido> query = this.sessionFactory.getCurrentSession().createNativeQuery("select * from pedidos p where p.data_hora_entrega is null order by data_hora_criacao", Pedido.class);
+		NativeQuery<Pedido> query = this.sessionFactory.getCurrentSession().createNativeQuery("select * from pedidos p where p.data_hora_entrega is null and p.data_hora_finalizacao is not null order by data_hora_criacao", Pedido.class);
 		return (List<Pedido>) query.getResultList();
 	}
 

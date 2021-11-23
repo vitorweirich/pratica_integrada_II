@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.query.NativeQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,8 @@ public class ComandaDAOImpl implements ComandaDAO {
 	@Override
 	@Transactional
 	public List<Comanda> getComandas() {
-		return (List<Comanda>) this.sessionFactory.getCurrentSession().createQuery("from Comanda").list();
+		NativeQuery<Comanda> createNativeQuery = this.sessionFactory.getCurrentSession().createNativeQuery("select * from comandas c where c.data_hora_finalizacao is null", Comanda.class);
+		return createNativeQuery.getResultList();
 	}
 
 	@Override

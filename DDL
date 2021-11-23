@@ -77,10 +77,10 @@ create table log (
 	operacao varchar (10),
 	dadosNovos text,
 	dadosAntigos text
-)
+);
 
-create sequence identificador_cont start with 1
-alter sequence identificador_cont owned by log.identificador
+create sequence identificador_cont start with 1;
+alter sequence identificador_cont owned by log.identificador;
 
 create or replace function atualizapreco()
 returns trigger

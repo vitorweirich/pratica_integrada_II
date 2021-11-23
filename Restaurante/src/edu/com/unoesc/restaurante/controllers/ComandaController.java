@@ -56,7 +56,7 @@ public class ComandaController implements Serializable {
 		return "comandaDetalhe.xhtml";
 	}
 
-	public void pagar() {
+	public void pagar() throws IOException {
 		if (this.valor != null) {
 			Comanda comandaById = comandaDAO.getComandaById(this.getComanda().getId());
 			if (comandaById.getValorPago() == null) {
@@ -72,9 +72,11 @@ public class ComandaController implements Serializable {
 				}
 				this.comandaDAO.updateComanda(comandaById);
 				this.valor = null;
+				this.detalheStr(comandaById.getId());
 			} else {
 				this.valor = comandaById.getValorTotal() - comandaById.getValorPago();
 				System.out.println("Acontece alguma coisa " + valor);
+				this.detalheStr(comandaById.getId());
 			}
 		} 
 	}

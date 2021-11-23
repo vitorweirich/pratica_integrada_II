@@ -1,5 +1,6 @@
 package edu.com.unoesc.restaurante.controllers;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
@@ -27,6 +28,9 @@ public class PedidoController implements Serializable {
 	@ManagedProperty(value = "#{ComandaDAO}")
 	private ComandaDAO comandaDAO;
 	
+	@ManagedProperty(value = "#{comandaMB}")
+	private ComandaController comandaMB;
+	
 	public ComandaDAO getComandaDAO() {
 		return comandaDAO;
 	}
@@ -35,7 +39,15 @@ public class PedidoController implements Serializable {
 		this.comandaDAO = comandaDAO;
 	}
 
-	public void save() {
+	public ComandaController getComandaMB() {
+		return comandaMB;
+	}
+
+	public void setComandaMB(ComandaController comandaMB) {
+		this.comandaMB = comandaMB;
+	}
+
+	public void save() throws IOException {
 		this.pedido.setDataCriacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 		if (this.pedido.getId() == -1) {
 			this.pedidoDAO.insertPedido(pedido);
@@ -44,7 +56,7 @@ public class PedidoController implements Serializable {
 		}
 		this.listPedidosCozinha = null;
 		this.listPedidosGarcom = null;
-
+		comandaMB.detalheStr(pedido.getComanda().getId());
 		this.pedido = new Pedido();
 
 	}

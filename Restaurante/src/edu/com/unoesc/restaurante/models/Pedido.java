@@ -1,6 +1,7 @@
 package edu.com.unoesc.restaurante.models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -68,6 +69,16 @@ public class Pedido {
 
 	public LocalDateTime getDataFinalizacao() {
 		return dataFinalizacao;
+	}
+	
+	public String getDataFinalizacaoBr() {
+		DateTimeFormatter ofPattern = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		return dataFinalizacao.format(ofPattern);
+	}
+	
+	public String getDataCriacaoBr() {
+		DateTimeFormatter ofPattern = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		return dataCriacao.format(ofPattern);
 	}
 
 	public void setDataFinalizacao(LocalDateTime dataFinalizacao) {

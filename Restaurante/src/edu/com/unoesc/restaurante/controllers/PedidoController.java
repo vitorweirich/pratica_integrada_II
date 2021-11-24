@@ -58,9 +58,8 @@ public class PedidoController implements Serializable {
 		this.listPedidosGarcom = null;
 		comandaMB.detalheStr(pedido.getComanda().getId());
 		this.pedido = new Pedido();
-
 	}
-
+	
 	public void load(int id) {
 		pedido = pedidoDAO.getPedidoById(id);
 	}

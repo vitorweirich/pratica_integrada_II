@@ -8,13 +8,13 @@
 	xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+</h:head>
+<h:body>
 	<p:breadCrumb>
 		<p:menuitem value="Index" url="index.xhtml" />
 		<p:menuitem value="Comanda" url="comanda.xhtml" />
 		<p:menuitem value="ComandaDetalhe" url="#" />
 	</p:breadCrumb>
-</h:head>
-<h:body>
 	<p:panel style="width:70%; margin: 20px auto;" id="panel">
 		<p:dataTable value="#{comandaMB.comanda}" scrollable="true"
 			scrollHeight="200">
@@ -29,10 +29,10 @@
 				<h:outputText value="#{comandaMB.comanda.mesa}" />
 			</p:column>
 			<p:column headerText="Data Criação">
-				<h:outputText value="#{comandaMB.comanda.dataCriacao}" />
+				<h:outputText value="#{comandaMB.comanda.dataCriacaoBr}" />
 			</p:column>
 			<p:column headerText="Data Finalização">
-				<h:outputText value="#{comandaMB.comanda.dataFinalizacao}" />
+				<h:outputText value="#{comandaMB.comanda.dataFinalizacaoBr}" />
 			</p:column>
 			<p:column headerText="Desconto">
 				<h:outputText value="#{comandaMB.comanda.desconto}" />
@@ -50,11 +50,12 @@
 		style="margin: 20px auto; width:40%;">
 		<h:form>
 			<h:inputHidden value="#{pedidoMB.pedido.id}" />
-			<h:inputHidden rendered="#{pedidoMB.pedido.setComanda(comandaMB.comanda)}" value="" />
-	
+			<h:inputHidden
+				rendered="#{pedidoMB.pedido.setComanda(comandaMB.comanda)}" value="" />
+
 			<p:growl id="growl" sticky="false" showDetail="false" />
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
-<!-- 				<p:outputLabel for="@next" value="Comanda:" /> -->
+				<!-- 				<p:outputLabel for="@next" value="Comanda:" /> -->
 				<p:selectOneMenu id="comanda" value="#{pedidoMB.pedido.comanda}"
 					converter="ComandaConverter" style="width:125px; display: none">
 					<f:selectItems value="#{comandaMB.listComandas}" var="y"
@@ -71,15 +72,14 @@
 				<h:outputText value="Quantidade: " />
 				<p:inputText value="#{pedidoMB.pedido.quantidade}" />
 				<p:commandButton value="Salvar" icon="ui-icon-disk"
-					update="panel panelCad panelProdutos"
-					action="#{pedidoMB.save}"
+					update="panel panelCad panelProdutos" action="#{pedidoMB.save}"
 					style="margin-right:20px;">
-					</p:commandButton>
+				</p:commandButton>
 
 			</h:panelGrid>
 		</h:form>
 	</p:panel>
-	
+
 	<p:panel id="panelCad2" header="Cadastro"
 		style="margin: 20px auto; width:40%;">
 		<h:form>
@@ -90,8 +90,7 @@
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
 				<h:outputText value="Valor " />
-				<p:inputText value="#{comandaMB.valor}"
-					required="true" label="Nome" />
+				<p:inputText value="#{comandaMB.valor}" label="Nome" />
 
 				<p:commandButton value="Pagar" icon="ui-icon-disk"
 					update="panel panelCad panelCad2" action="#{comandaMB.pagar}"
@@ -100,10 +99,10 @@
 			</h:panelGrid>
 		</h:form>
 	</p:panel>
-	
+
 	<p:panel style="width:70%; margin: 20px auto;" id="panelProdutos">
-		<p:dataTable var="c" value="#{comandaMB.comanda.pedidos}" scrollable="true"
-			scrollHeight="200">
+		<p:dataTable var="c" value="#{comandaMB.comanda.pedidos}"
+			scrollable="true" scrollHeight="200">
 
 			<p:column headerText="*">
 				<h:outputText value="#{c.id}" />
@@ -112,11 +111,11 @@
 			<p:column headerText="Nome">
 				<h:outputText value="#{c.produto.nome}" />
 			</p:column>
-			
+
 			<p:column headerText="Unidades">
 				<h:outputText value="#{c.quantidade}" />
 			</p:column>
-			
+
 			<p:column headerText="Preço">
 				<h:outputText value="#{c.produto.preco}" />
 			</p:column>
@@ -124,19 +123,19 @@
 			<p:column headerText="Quantidade">
 				<h:outputText value="#{c.produto.quantidade}" />
 			</p:column>
-			
+
 			<p:column headerText="Unidade de Medida">
 				<h:outputText value="#{c.produto.unidadeMedida}" />
 			</p:column>
-			
+
 			<p:column headerText="Cozido?">
 				<h:outputText value="#{c.produto.cozido}" />
 			</p:column>
-			
+
 			<p:column headerText="Nome Estabelecimento">
 				<h:outputText value="#{c.produto.estabelecimento.nome}" />
 			</p:column>
-			
+
 			<p:column headerText="Nome Categoria">
 				<h:outputText value="#{c.produto.categoria.descricao}" />
 			</p:column>

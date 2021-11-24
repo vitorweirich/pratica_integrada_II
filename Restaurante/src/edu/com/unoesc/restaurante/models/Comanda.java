@@ -1,6 +1,7 @@
 package edu.com.unoesc.restaurante.models;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -61,6 +62,18 @@ public class Comanda {
 
 	public List<Produto> getProdutos() {
 		return produtos;
+	}
+	
+	public String getDataCriacaoBr() {
+		if (dataCriacao == null) return null;
+		DateTimeFormatter ofPattern = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		return dataCriacao.format(ofPattern);
+	}
+	
+	public String getDataFinalizacaoBr() {
+		if (dataFinalizacao == null) return null;
+		DateTimeFormatter ofPattern = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm");
+		return dataFinalizacao.format(ofPattern);
 	}
 
 	public void setProdutos(List<Produto> produtos) {

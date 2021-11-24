@@ -56,28 +56,35 @@ public class ComandaController implements Serializable {
 	}
 
 	public void pagar() throws IOException {
-		if (this.valor != null) {
-			Comanda comandaById = comandaDAO.getComandaById(this.getComanda().getId());
-			if (comandaById.getValorPago() == null) {
-				comandaById.setValorPago(0d);
-			}
-			if (comandaById.getValorTotal() == null) {
-				comandaById.setValorTotal(0d);
-			}
+		Comanda comandaById = comandaDAO.getComandaById(this.getComanda().getId());
+		if (comandaById.getValorPago() == null) {
+			comandaById.setValorPago(0d);
+		}
+		if (comandaById.getValorTotal() == null) {
+			comandaById.setValorTotal(0d);
+		}
+		if (this.valor != null && comandaById.getValorTotal() > 0) {
 			if ((this.valor + comandaById.getValorPago()) <= comandaById.getValorTotal()) {
 				comandaById.setValorPago(comandaById.getValorPago() + valor);
 				if (comandaById.getValorPago() >= comandaById.getValorTotal()) {
 					comandaById.setDataFinalizacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
+					this.comandaDAO.updateComanda(comandaById);
+					ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
+			        ec.redirect("comanda.xhtml");
+				} else {
+					this.comandaDAO.updateComanda(comandaById);
+					this.detalheStr(comandaById.getId());
 				}
-				this.comandaDAO.updateComanda(comandaById);
 				this.valor = null;
-				this.detalheStr(comandaById.getId());
 			} else {
 				this.valor = comandaById.getValorTotal() - comandaById.getValorPago();
-				System.out.println("Acontece alguma coisa " + valor);
 				this.detalheStr(comandaById.getId());
 			}
-		} 
+		} else {
+			this.valor = comandaById.getValorTotal() - comandaById.getValorPago();
+			System.out.println(comandaById.getId());
+			this.detalheStr(comandaById.getId());
+		}
 	}
 
 	public void detalhe(int id) throws IOException {

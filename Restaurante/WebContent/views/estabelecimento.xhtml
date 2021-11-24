@@ -69,24 +69,24 @@
 
 				<p:outputLabel for="@next" value="Endereco:" />
 				<p:selectOneMenu id="conta" value="#{estabelecimentoMB.estabelecimento.endereco}"  converter="EnderecoConverter"
-					style="width:125px">
+					style="width:125px" required="true">
 					<f:selectItems value="#{enderecoMB.listEnderecos}" var="e" itemLabel="#{e.logradouro}" itemValue="#{e}"/>
 				</p:selectOneMenu>
 
 				<h:outputText value="Nome: " />
-				<p:inputText value="#{estabelecimentoMB.estabelecimento.nome}" />
+				<p:inputText label="Nome" value="#{estabelecimentoMB.estabelecimento.nome}" required="true"/>
 
 				<h:outputText value="Razao Social: " />
-				<p:inputText value="#{estabelecimentoMB.estabelecimento.razaoSocial}" />
+				<p:inputText label="Razao Social" value="#{estabelecimentoMB.estabelecimento.razaoSocial}" required="true"/>
 				
 				<h:outputText value="CNPJ: " />
-				<p:inputText value="#{estabelecimentoMB.estabelecimento.cnpj}" />
+				<p:inputText label="CNPJ" value="#{estabelecimentoMB.estabelecimento.cnpj}" required="true"/>
 				
 				<h:outputText value="Inscricao Estadual: " />
-				<p:inputText value="#{estabelecimentoMB.estabelecimento.inscricaoEstadual}" />
+				<p:inputText label="Inscricao Estadual" value="#{estabelecimentoMB.estabelecimento.inscricaoEstadual}" required="true"/>
 				
 				<h:outputText value="Telefone: " />
-				<p:inputText value="#{estabelecimentoMB.estabelecimento.telefone}" />
+				<p:inputText label="Telefone" value="#{estabelecimentoMB.estabelecimento.telefone}" required="true"/>
 				
 				<p:commandButton value="Salvar" icon="ui-icon-disk" update="panel panelCad"
 					action="#{estabelecimentoMB.save}" style="margin-right:20px;" />

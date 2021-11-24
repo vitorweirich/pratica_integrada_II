@@ -15,9 +15,9 @@
 </h:head>
 <h:body>
 
-	<p:panel header="Pedidos a entregar" style="width:80%; margin: 20px auto;" id="panel">
+	<p:panel header="Pedidos a entregar" style="width:80%; margin: 20px auto;  height: 70%;" id="panel">
 		<p:dataTable var="p" value="#{pedidoMB.listPedidosGarcom}" scrollable="true"
-			scrollHeight="200">
+			scrollHeight="300">
 			<p:column headerText="*" style="width:10%">
 				<h:outputText value="#{p.id}" />
 			</p:column>

@@ -70,28 +70,28 @@
 
 				<p:outputLabel for="@next" value="Endereco:" />
 				<p:selectOneMenu id="id_end" value="#{funcionarioMB.funcionario.endereco}"  converter="EnderecoConverter"
-					style="width:125px">
+					style="width:125px" required="true">
 					<f:selectItems value="#{enderecoMB.listEnderecos}" var="c" itemLabel="#{c.logradouro}" itemValue="#{c}"/>
 				</p:selectOneMenu>
 				
 				<p:outputLabel for="@next" value="Estabelecimento:" />
 				<p:selectOneMenu id="id_est" value="#{funcionarioMB.funcionario.estabelecimento}"  converter="EstabelecimentoConverter"
-					style="width:125px">
+					style="width:125px" required="true">
 					<f:selectItems value="#{estabelecimentoMB.listEstabelecimentos}" var="d" itemLabel="#{d.nome}" itemValue="#{d}"/>
 				</p:selectOneMenu>
 
 				<h:outputText value="Nome: " />
-				<p:inputText value="#{funcionarioMB.funcionario.nome}" />
+				<p:inputText label="Nome" value="#{funcionarioMB.funcionario.nome}" required="true"/>
 				
 				<h:outputLabel for="data" value="Data de nascimento:" />
-				<p:datePicker id="data" value="#{funcionarioMB.funcionario.nascimento}"
-					showIcon="true" />
+				<p:datePicker label="Data de nascimento" id="data" value="#{funcionarioMB.funcionario.nascimento}"
+					showIcon="true" required="true"/>
 					
 				<h:outputText value="Cpf: " />
-				<p:inputText value="#{funcionarioMB.funcionario.cpf}" />
+				<p:inputText label="Cpf" value="#{funcionarioMB.funcionario.cpf}" required="true"/>
 				
-				<h:outputText value="Funcao: " />
-				<p:inputText value="#{funcionarioMB.funcionario.funcao}" />
+				<h:outputText value="Função: " />
+				<p:inputText label="Função" value="#{funcionarioMB.funcionario.funcao}" required="true"/>
 				
 				<p:commandButton value="Salvar" icon="ui-icon-disk" update="panel panelCad"
 					action="#{funcionarioMB.save}" style="margin-right:20px;" />

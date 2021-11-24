@@ -41,7 +41,6 @@ public class ComandaController implements Serializable {
 			this.comanda.setDataCriacao(LocalDateTime.now(ZoneId.of("America/Sao_Paulo")));
 			this.comandaDAO.insertComanda(comanda);
 		} else {
-			System.out.println(comanda);
 			comanda.setDataCriacao(comandaDAO.getComandaById(comanda.getId()).getDataCriacao());
 			this.comandaDAO.updateComanda(comanda);
 		}

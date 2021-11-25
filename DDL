@@ -11,8 +11,8 @@ create table Estabelecimento (
     nome varchar(100) not null,
     id_endereco integer not null,
     razao_social varchar(100) not null,
-    cnpj varchar(14) not null,
-    inscricao_estadual varchar(15) not null,
+    cnpj varchar(14) not null unique,
+    inscricao_estadual varchar(15) not null unique,
     telefone varchar(11) not null,
     foreign key(id_endereco) references Endereco(id)
 );
@@ -20,7 +20,7 @@ create table Estabelecimento (
 create table Funcionarios (
     id serial primary key,
     nome varchar(100) not null,
-    cpf varchar(11) not null,
+    cpf varchar(11) not null unique,
     data_nasc date not null,
     funcao varchar(25) not null,
     id_endereco integer not null,
@@ -31,7 +31,7 @@ create table Funcionarios (
 
 create table Categoria (
     id serial primary key,
-    descricao varchar(250) not null
+    descricao varchar(250) not null unique
 );
 
 create table Produtos (
@@ -131,3 +131,29 @@ $$ language plpgsql;
 create trigger table_update_comandas
 before update or delete or insert on comandas
 for each row execute procedure check_change();
+
+create index id_cat on categoria (id);
+
+create index id_com on comandas (id);
+create index id_estab on comandas (id_estabelecimento);
+create index id_mesa on comandas (mesa);
+
+create index id_end on endereco (id);
+
+create index id_est on estabelecimento (id);
+create index cnpj on estabelecimento (cnpj);
+create index inscricao_estadual on estabelecimento (inscricao_estadual);
+
+create index id_func on funcionarios (id);
+create index cpf on funcionarios (cpf);
+create index id_estb on funcionarios (id_estabelecimento);
+
+create index id_log on log (identificador);
+
+create index id_pedidos on pedidos (id);
+create index id_comandas on pedidos (id_comandas);
+create index id_produto on pedidos (id_produtos);
+
+create index id_produtos on produtos (id);
+create index id_categoria on produtos (id_categoria);
+create index id_estabelecimento on produtos (id_estabelecimento);

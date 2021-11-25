@@ -78,7 +78,7 @@
 				</p:selectOneMenu>
 
 				<h:outputText value="Mesa: " />
-				<p:inputText value="#{comandaMB.comanda.mesa}" />
+				<p:inputText value="#{comandaMB.comanda.mesa}" required="true" label="Mesa" />
 
 				<p:commandButton value="Salvar" icon="ui-icon-disk"
 					update="panel panelCad" action="#{comandaMB.save}"

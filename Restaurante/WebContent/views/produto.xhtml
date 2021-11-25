@@ -83,19 +83,19 @@
 				</p:selectOneMenu>
 
 				<h:outputText value="Nome: " />
-				<p:inputText value="#{produtoMB.produto.nome}" />
+				<p:inputText value="#{produtoMB.produto.nome}" required="true" label="Nome" />
 				
 				<h:outputText value="Preco: " />
-				<p:inputText value="#{produtoMB.produto.preco}" />
+				<p:inputText value="#{produtoMB.produto.preco}" required="true" label="Preco" />
 				
 				<h:outputText value="Quantidade: " />
-				<p:inputText value="#{produtoMB.produto.quantidade}" />
+				<p:inputText value="#{produtoMB.produto.quantidade}" required="true" label="Quantidade" />
 				
 				<h:outputText value="Unidade de Medida: " />
-				<p:inputText value="#{produtoMB.produto.unidadeMedida}" />
+				<p:inputText value="#{produtoMB.produto.unidadeMedida}" required="true" label="Unidade de Medida" />
 				
 				<h:outputText value="Cozido: " />
-				<p:selectOneRadio id="console" value="#{produtoMB.produto.cozido}" unselectable="true">
+				<p:selectOneRadio id="console" value="#{produtoMB.produto.cozido}" unselectable="true" required="true" label="Cozido">
            		 <f:selectItem itemLabel="Sim" itemValue="1"/>
             	 <f:selectItem itemLabel="Não" itemValue="0"/>
      			</p:selectOneRadio>

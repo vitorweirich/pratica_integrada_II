@@ -70,7 +70,7 @@
 				</p:selectOneMenu>
 
 				<h:outputText value="Quantidade: " />
-				<p:inputText value="#{pedidoMB.pedido.quantidade}" />
+				<p:inputText value="#{pedidoMB.pedido.quantidade}" required="true" label="Quantidade"/>
 				<p:commandButton value="Salvar" icon="ui-icon-disk"
 					update="panel panelCad panelProdutos" action="#{pedidoMB.save}"
 					style="margin-right:20px;">
@@ -89,8 +89,8 @@
 			<p:growl id="growl" sticky="false" showDetail="false" />
 			<h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
 
-				<h:outputText value="Valor " />
-				<p:inputText value="#{comandaMB.valor}" label="Nome" />
+				<h:outputText value="Valor: " />
+				<p:inputText value="#{comandaMB.valor}" label="Valor"/>
 
 				<p:commandButton value="Pagar" icon="ui-icon-disk"
 					update="panel panelCad panelCad2" action="#{comandaMB.pagar}"
